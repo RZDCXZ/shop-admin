@@ -1,20 +1,24 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { FormRules } from 'element-plus'
+import { ElNotification, FormRules } from 'element-plus'
 import { User, Lock } from '@element-plus/icons-vue'
 import { FormInstance } from 'element-plus/lib/components'
+import { useUserStore } from '@/store/user.ts'
+import { useRouter } from 'vue-router'
 
-interface LoginForm {
+export interface LoginParams {
   username: string
   password: string
 }
 
-const loginForm = reactive<LoginForm>({
+const isLoading = ref(false)
+
+const loginForm = reactive<LoginParams>({
   username: '',
   password: '',
 })
 
-const loginFormRules: FormRules<LoginForm> = {
+const loginFormRules: FormRules<LoginParams> = {
   username: [
     { required: true, message: '用户名不能为空', trigger: 'blur' },
     {
@@ -27,9 +31,9 @@ const loginFormRules: FormRules<LoginForm> = {
   password: [
     { required: true, message: '密码不能为空', trigger: 'blur' },
     {
-      min: 6,
+      min: 5,
       max: 16,
-      message: '长度为6-16个字符',
+      message: '长度为5-16个字符',
       trigger: 'blur',
     },
   ],
@@ -37,10 +41,21 @@ const loginFormRules: FormRules<LoginForm> = {
 
 const loginFormRef = ref<FormInstance>()
 
+const { login, getUserInfo } = useUserStore()
+
+const router = useRouter()
+
 const onLogin = () => {
-  loginFormRef.value?.validate((valid) => {
+  loginFormRef.value?.validate(async (valid) => {
     if (valid) {
-      console.log('验证通过')
+      isLoading.value = true
+      await login(loginForm).finally(() => (isLoading.value = false))
+      await getUserInfo()
+      await router.push('/')
+      ElNotification({
+        type: 'success',
+        message: '登录成功',
+      })
     }
   })
 }
@@ -75,7 +90,7 @@ const onLogin = () => {
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" round class="w-full" @click="onLogin">登录</el-button>
+          <el-button type="primary" round class="w-full" :loading="isLoading" @click="onLogin">登录</el-button>
         </el-form-item>
       </el-form>
     </div>

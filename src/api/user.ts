@@ -1,0 +1,49 @@
+import request from '@/utils/request.ts'
+import type { LoginParams } from '@/pages/Login.vue'
+
+interface LoginResult {
+  token: string
+}
+
+interface Menus {
+  id: number
+  rule_id: number
+  status: number
+  create_time: string
+  update_time: string
+  name: string
+  desc: string
+  frontpath: string | null
+  condition: string | null
+  menu: number
+  order: number
+  icon: string
+  method: string
+  child?: Menus[]
+}
+
+export interface UserInfoResult {
+  id: number
+  username: string
+  avatar: string
+  super: number
+  role: {
+    id: number
+    name: string
+  }
+  roleNames: string[]
+  menus: Menus
+}
+
+export const loginApi = (data: LoginParams) =>
+  request<LoginResult>({
+    url: '/admin/login',
+    method: 'post',
+    data,
+  })
+
+export const getUserInfoApi = () =>
+  request<UserInfoResult>({
+    url: '/admin/getinfo',
+    method: 'post',
+  })
