@@ -7,23 +7,23 @@ import { ref } from 'vue'
 import { TOKEN_NAME } from '@/constant/config.ts'
 
 export const useUserStore = defineStore('user', () => {
-  const cookies = useCookies()
+    const cookies = useCookies()
 
-  const userInfo = ref<UserInfoResult>()
+    const userInfo = ref<UserInfoResult>()
 
-  const login = async (data: LoginParams) => {
-    const res = await loginApi(data)
-    cookies.set(TOKEN_NAME, res.data.token)
-  }
+    const login = async (data: LoginParams) => {
+        const res = await loginApi(data)
+        cookies.set(TOKEN_NAME, res.data.token)
+    }
 
-  const getUserInfo = async () => {
-    const res = await getUserInfoApi()
-    userInfo.value = res.data
-  }
+    const getUserInfo = async () => {
+        const res = await getUserInfoApi()
+        userInfo.value = res.data
+    }
 
-  return {
-    login,
-    userInfo,
-    getUserInfo,
-  }
+    return {
+        login,
+        userInfo,
+        getUserInfo,
+    }
 })
