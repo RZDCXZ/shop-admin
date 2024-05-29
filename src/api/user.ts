@@ -48,3 +48,9 @@ export const getUserInfoApi = () =>
         url: '/admin/getinfo',
         method: 'post',
     })
+
+export const logoutApi = () =>
+    request<string>({
+        url: '/admin/logout',
+        method: 'post',
+    })

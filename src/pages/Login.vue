@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted, onUnmounted } from 'vue'
 import { ElNotification, FormRules } from 'element-plus'
 import { User, Lock } from '@element-plus/icons-vue'
 import { FormInstance } from 'element-plus/lib/components'
@@ -55,10 +55,25 @@ const onLogin = () => {
             ElNotification({
                 type: 'success',
                 message: '登录成功',
+                duration: 2000,
             })
         }
     })
 }
+
+const onKeyUp = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+        onLogin()
+    }
+}
+
+onMounted(() => {
+    document.addEventListener('keyup', onKeyUp)
+})
+
+onUnmounted(() => {
+    document.removeEventListener('keyup', onKeyUp)
+})
 </script>
 
 <template>

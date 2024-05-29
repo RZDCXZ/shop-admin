@@ -19,6 +19,7 @@
         "element-plus": "^2.7.3",
         "nprogress": "^0.2.0",
         "pinia": "^2.1.7",
+        "pinia-plugin-persistedstate": "^3.2.1",
         "universal-cookie": "^7.1.4",
         "unocss-preset-grid": "^1.6.5",
         "vue": "^3.4.21",

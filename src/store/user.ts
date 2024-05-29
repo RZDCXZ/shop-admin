@@ -1,29 +1,60 @@
 import { defineStore } from 'pinia'
-import { loginApi, getUserInfoApi } from '@/api/user.ts'
+import { loginApi, getUserInfoApi, logoutApi } from '@/api/user.ts'
 import { LoginParams } from '@/pages/Login.vue'
 import { UserInfoResult } from '@/api/user.ts'
-import { useCookies } from '@vueuse/integrations/useCookies'
 import { ref } from 'vue'
-import { TOKEN_NAME } from '@/constant/config.ts'
+import { setToken, removeToken } from '@/utils/auth.ts'
+import { useRouter } from 'vue-router'
+import { ElNotification } from 'element-plus'
 
-export const useUserStore = defineStore('user', () => {
-    const cookies = useCookies()
+export const useUserStore = defineStore(
+    'user',
+    () => {
+        const router = useRouter()
 
-    const userInfo = ref<UserInfoResult>()
+        const userInfo = ref<UserInfoResult>()
 
-    const login = async (data: LoginParams) => {
-        const res = await loginApi(data)
-        cookies.set(TOKEN_NAME, res.data.token)
-    }
+        const setUserInfo = (data: UserInfoResult) => {
+            userInfo.value = data
+        }
 
-    const getUserInfo = async () => {
-        const res = await getUserInfoApi()
-        userInfo.value = res.data
-    }
+        const removeUserInfo = () => {
+            userInfo.value = undefined
+        }
 
-    return {
-        login,
-        userInfo,
-        getUserInfo,
-    }
-})
+        const login = async (data: LoginParams) => {
+            const res = await loginApi(data)
+            setToken(res.data.token)
+        }
+
+        const getUserInfo = async () => {
+            const res = await getUserInfoApi()
+            setUserInfo(res.data)
+        }
+
+        const logout = async () => {
+            await logoutApi().finally(async () => {
+                removeToken()
+                removeUserInfo()
+                await router.push('/login')
+                ElNotification({
+                    type: 'success',
+                    message: '退出登录成功',
+                    duration: 2000,
+                })
+            })
+        }
+
+        return {
+            login,
+            logout,
+            userInfo,
+            setUserInfo,
+            removeUserInfo,
+            getUserInfo,
+        }
+    },
+    {
+        persist: true,
+    },
+)
