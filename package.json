@@ -17,6 +17,7 @@
     "@vueuse/integrations": "^10.10.0",
     "axios": "^1.7.2",
     "element-plus": "^2.7.3",
+    "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
     "universal-cookie": "^7.1.4",
     "unocss-preset-grid": "^1.6.5",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.12.12",
+    "@types/nprogress": "^0.2.3",
     "@typescript-eslint/eslint-plugin": "^7.10.0",
     "@typescript-eslint/parser": "^7.10.0",
     "@unocss/preset-uno": "^0.60.3",

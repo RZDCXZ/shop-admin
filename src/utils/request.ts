@@ -3,6 +3,8 @@ import type { AxiosRequestConfig } from 'axios'
 import { ElNotification } from 'element-plus'
 import { useCookies } from '@vueuse/integrations/useCookies'
 import { TOKEN_NAME } from '@/constant/config.ts'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 interface BaseResult<T = any> {
   msg: string
@@ -18,6 +20,7 @@ const instance = axios.create({
 // 添加请求拦截器
 instance.interceptors.request.use(
   function (config) {
+    NProgress.start()
     const cookies = useCookies()
     const token = cookies.get(TOKEN_NAME)
     if (token) {
@@ -33,6 +36,7 @@ instance.interceptors.request.use(
 // 添加响应拦截器
 instance.interceptors.response.use(
   function (response) {
+    NProgress.done()
     return response.data
   },
   function (error: AxiosError<BaseResult>) {
@@ -41,6 +45,7 @@ instance.interceptors.response.use(
       message: error?.response?.data.msg || '请求错误',
       duration: 2000,
     })
+    NProgress.done()
     return Promise.reject(error)
   },
 )
