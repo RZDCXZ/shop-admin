@@ -2,6 +2,7 @@ import axios, { AxiosError } from 'axios'
 import type { AxiosRequestConfig } from 'axios'
 import { ElNotification } from 'element-plus'
 import { useCookies } from '@vueuse/integrations/useCookies'
+import { TOKEN_NAME } from '@/constant/config.ts'
 
 interface BaseResult<T = any> {
   msg: string
@@ -18,7 +19,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     const cookies = useCookies()
-    const token = cookies.get('admin-token')
+    const token = cookies.get(TOKEN_NAME)
     if (token) {
       config.headers['token'] = token
     }

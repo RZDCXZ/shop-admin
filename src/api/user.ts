@@ -1,5 +1,6 @@
 import request from '@/utils/request.ts'
 import type { LoginParams } from '@/pages/Login.vue'
+import { Super } from '@/constant/enum.ts'
 
 interface LoginResult {
   token: string
@@ -26,7 +27,7 @@ export interface UserInfoResult {
   id: number
   username: string
   avatar: string
-  super: number
+  super: Super
   role: {
     id: number
     name: string

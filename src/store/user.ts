@@ -4,6 +4,7 @@ import { LoginParams } from '@/pages/Login.vue'
 import { UserInfoResult } from '@/api/user.ts'
 import { useCookies } from '@vueuse/integrations/useCookies'
 import { ref } from 'vue'
+import { TOKEN_NAME } from '@/constant/config.ts'
 
 export const useUserStore = defineStore('user', () => {
   const cookies = useCookies()
@@ -12,7 +13,7 @@ export const useUserStore = defineStore('user', () => {
 
   const login = async (data: LoginParams) => {
     const res = await loginApi(data)
-    cookies.set('admin-token', res.data.token)
+    cookies.set(TOKEN_NAME, res.data.token)
   }
 
   const getUserInfo = async () => {
