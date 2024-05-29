@@ -63,7 +63,7 @@ const onLogin = () => {
 
 <template>
   <div class="row w-screen h-screen">
-    <div class="col-12 md:col-8 bg-blue-500 flex-center flex-col text-light-50">
+    <div class="col-12 md:col-8 bg-blue-500 dark:bg-black flex-center flex-col text-light-50">
       <div class="font-bold text-2xl md:text-5xl px-4">欢迎光临</div>
       <div class="text-sm md:text-xl text-gray-50 mt-4 px-4">
         商城后台管理系统，技术栈：vue3+typescript+vite+unocss+element-plus
