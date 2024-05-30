@@ -7,3 +7,7 @@ export const showProgress = () => {
 export const hideProgress = () => {
     NProgress.done()
 }
+
+export const refreshWindow = () => {
+    window.location.reload()
+}

@@ -54,3 +54,9 @@ export const logoutApi = () =>
         url: '/admin/logout',
         method: 'post',
     })
+
+export const resetPwdApi = () =>
+    request<boolean>({
+        url: '/admin/updatepassword',
+        method: 'post',
+    })

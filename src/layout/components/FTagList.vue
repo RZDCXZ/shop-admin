@@ -1,7 +1,5 @@
 <script setup lang="ts"></script>
 
-<template>
-    <div>Home page</div>
-</template>
+<template>TagList</template>
 
 <style scoped></style>

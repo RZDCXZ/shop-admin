@@ -12,15 +12,22 @@ declare module 'vue-router' {
 const Home = () => import('@/pages/Home.vue')
 const NotFound = () => import('@/pages/NotFound.vue')
 const Login = () => import('@/pages/Login.vue')
+const Layout = () => import('@/layout/Layout.vue')
 
 const routes: RouteRecordRaw[] = [
     {
         path: '/',
-        name: 'home',
-        component: Home,
-        meta: {
-            title: '后台首页',
-        },
+        component: Layout,
+        children: [
+            {
+                path: '',
+                name: 'home',
+                component: Home,
+                meta: {
+                    title: '后台首页',
+                },
+            },
+        ],
     },
     {
         path: '/login',
