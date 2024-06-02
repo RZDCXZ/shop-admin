@@ -3,6 +3,8 @@ import type { AxiosRequestConfig } from 'axios'
 import { ElNotification } from 'element-plus'
 import { getToken } from '@/utils/auth.ts'
 import { showProgress, hideProgress } from '@/utils/tools.ts'
+import { useUserStore } from '@/store/user.ts'
+import router from '@/router'
 
 interface BaseResult<T = any> {
     msg: string
@@ -36,10 +38,18 @@ instance.interceptors.response.use(
         hideProgress()
         return response.data
     },
-    function (error: AxiosError<BaseResult>) {
+    async function (error: AxiosError<BaseResult>) {
+        const msg = error?.response?.data.msg || '请求错误'
+
+        if (msg === '非法token，请先登录！') {
+            const { removeToken, removeUserInfo } = useUserStore()
+            removeToken()
+            removeUserInfo()
+            await router.push('/login')
+        }
         ElNotification({
             type: 'error',
-            message: error?.response?.data.msg || '请求错误',
+            message: msg,
             duration: 2000,
         })
         hideProgress()

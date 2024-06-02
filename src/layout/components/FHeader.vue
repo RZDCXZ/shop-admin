@@ -1,9 +1,18 @@
 <script setup lang="ts">
 import { Aim, ArrowDown, CoffeeCup, Fold, FullScreen, Refresh, VideoCamera } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/user.ts'
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox, ElNotification, FormRules } from 'element-plus'
 import { useFullscreen } from '@vueuse/core'
 import { refreshWindow } from '@/utils/tools.ts'
+import { reactive, ref } from 'vue'
+import { updatePwdApi } from '@/api/user.ts'
+import { FormInstance } from 'element-plus/lib/components'
+
+export interface UpdatePwdParams {
+    password: string
+    oldpassword: string
+    repassword: string
+}
 
 const { userInfo, logout } = useUserStore()
 
@@ -16,7 +25,47 @@ const handleLogout = () => {
         type: 'warning',
     }).then(() => {
         logout()
+        ElNotification({
+            type: 'success',
+            message: '退出登录成功',
+            duration: 2000,
+        })
     })
+}
+
+const drawer = ref(false)
+
+const updatePwdFormRef = ref<FormInstance>()
+
+const updatePwdForm = reactive<UpdatePwdParams>({
+    password: '',
+    oldpassword: '',
+    repassword: '',
+})
+
+const updatePwdRules: FormRules<UpdatePwdParams> = {
+    password: [{ required: true, message: '请输入新密码', trigger: 'blur' }],
+    oldpassword: [{ required: true, message: '请输入旧密码', trigger: 'blur' }],
+    repassword: [{ required: true, message: '请输入确认密码', trigger: 'blur' }],
+}
+
+const updatePwd = () => {
+    updatePwdFormRef.value?.validate(async (valid) => {
+        if (valid) {
+            await updatePwdApi(updatePwdForm)
+            ElNotification({
+                type: 'success',
+                message: '重置密码成功',
+                duration: 2000,
+            })
+            await logout()
+        }
+    })
+}
+
+const onDrawerClose = () => {
+    drawer.value = false
+    updatePwdFormRef.value?.resetFields()
 }
 </script>
 
@@ -47,7 +96,7 @@ const handleLogout = () => {
             </el-tooltip>
             <el-avatar class="mr-4" :src="userInfo?.avatar" />
             <el-dropdown>
-                <span class="el-dropdown-link">
+                <span class="el-dropdown-link text-light-50">
                     {{ userInfo?.username }}
                     <el-icon class="el-icon--right">
                         <arrow-down />
@@ -55,12 +104,29 @@ const handleLogout = () => {
                 </span>
                 <template #dropdown>
                     <el-dropdown-menu>
-                        <el-dropdown-item>修改密码</el-dropdown-item>
+                        <el-dropdown-item @click="drawer = true">修改密码</el-dropdown-item>
                         <el-dropdown-item @click="handleLogout">退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
         </div>
+        <el-drawer v-model="drawer" title="重置密码" :before-close="onDrawerClose">
+            <el-form ref="updatePwdFormRef" :model="updatePwdForm" :rules="updatePwdRules" label-width="90">
+                <el-form-item label="旧密码:" prop="oldpassword">
+                    <el-input v-model="updatePwdForm.oldpassword" placeholder="请输入旧密码"></el-input>
+                </el-form-item>
+                <el-form-item label="新密码:" prop="password">
+                    <el-input v-model="updatePwdForm.password" placeholder="请输入新密码"></el-input>
+                </el-form-item>
+                <el-form-item label="确认密码:" prop="repassword">
+                    <el-input v-model="updatePwdForm.repassword" placeholder="请输入确认密码"></el-input>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <el-button @click="updatePwd">确认</el-button>
+                <el-button @click="onDrawerClose">取消</el-button>
+            </template>
+        </el-drawer>
     </div>
 </template>
 

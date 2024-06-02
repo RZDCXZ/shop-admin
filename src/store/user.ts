@@ -5,7 +5,6 @@ import { UserInfoResult } from '@/api/user.ts'
 import { ref } from 'vue'
 import { setToken, removeToken } from '@/utils/auth.ts'
 import { useRouter } from 'vue-router'
-import { ElNotification } from 'element-plus'
 
 export const useUserStore = defineStore(
     'user',
@@ -37,11 +36,6 @@ export const useUserStore = defineStore(
                 removeToken()
                 removeUserInfo()
                 await router.push('/login')
-                ElNotification({
-                    type: 'success',
-                    message: '退出登录成功',
-                    duration: 2000,
-                })
             })
         }
 
@@ -50,6 +44,7 @@ export const useUserStore = defineStore(
             logout,
             userInfo,
             setUserInfo,
+            removeToken,
             removeUserInfo,
             getUserInfo,
         }

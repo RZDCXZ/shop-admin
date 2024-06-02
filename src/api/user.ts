@@ -1,5 +1,6 @@
 import request from '@/utils/request.ts'
 import type { LoginParams } from '@/pages/Login.vue'
+import type { UpdatePwdParams } from '@/layout/components/FHeader.vue'
 import { Super } from '@/constant/enum.ts'
 
 interface LoginResult {
@@ -55,8 +56,9 @@ export const logoutApi = () =>
         method: 'post',
     })
 
-export const resetPwdApi = () =>
+export const updatePwdApi = (data: UpdatePwdParams) =>
     request<boolean>({
         url: '/admin/updatepassword',
         method: 'post',
+        data,
     })
