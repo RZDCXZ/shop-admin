@@ -24,6 +24,7 @@ declare module 'vue' {
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElResult: typeof import('element-plus/es')['ElResult']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    FormDrawer: typeof import('./src/components/FormDrawer.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

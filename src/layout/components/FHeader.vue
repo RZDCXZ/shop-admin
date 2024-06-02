@@ -7,6 +7,7 @@ import { refreshWindow } from '@/utils/tools.ts'
 import { reactive, ref } from 'vue'
 import { updatePwdApi } from '@/api/user.ts'
 import { FormInstance } from 'element-plus/lib/components'
+import FormDrawer from '@/components/FormDrawer.vue'
 
 export interface UpdatePwdParams {
     password: string
@@ -33,8 +34,6 @@ const handleLogout = () => {
     })
 }
 
-const drawer = ref(false)
-
 const updatePwdFormRef = ref<FormInstance>()
 
 const updatePwdForm = reactive<UpdatePwdParams>({
@@ -52,7 +51,8 @@ const updatePwdRules: FormRules<UpdatePwdParams> = {
 const updatePwd = () => {
     updatePwdFormRef.value?.validate(async (valid) => {
         if (valid) {
-            await updatePwdApi(updatePwdForm)
+            formDrawerRef.value?.showLoading()
+            await updatePwdApi(updatePwdForm).finally(() => formDrawerRef.value?.hideLoading())
             ElNotification({
                 type: 'success',
                 message: '重置密码成功',
@@ -63,10 +63,7 @@ const updatePwd = () => {
     })
 }
 
-const onDrawerClose = () => {
-    drawer.value = false
-    updatePwdFormRef.value?.resetFields()
-}
+const formDrawerRef = ref<InstanceType<typeof FormDrawer>>()
 </script>
 
 <template>
@@ -104,13 +101,13 @@ const onDrawerClose = () => {
                 </span>
                 <template #dropdown>
                     <el-dropdown-menu>
-                        <el-dropdown-item @click="drawer = true">修改密码</el-dropdown-item>
+                        <el-dropdown-item @click="formDrawerRef?.open">修改密码</el-dropdown-item>
                         <el-dropdown-item @click="handleLogout">退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
         </div>
-        <el-drawer v-model="drawer" title="重置密码" :before-close="onDrawerClose">
+        <form-drawer ref="formDrawerRef" title="重置密码" @submit="updatePwd" @cancel="updatePwdFormRef?.resetFields">
             <el-form ref="updatePwdFormRef" :model="updatePwdForm" :rules="updatePwdRules" label-width="90">
                 <el-form-item label="旧密码:" prop="oldpassword">
                     <el-input v-model="updatePwdForm.oldpassword" placeholder="请输入旧密码"></el-input>
@@ -122,11 +119,7 @@ const onDrawerClose = () => {
                     <el-input v-model="updatePwdForm.repassword" placeholder="请输入确认密码"></el-input>
                 </el-form-item>
             </el-form>
-            <template #footer>
-                <el-button @click="updatePwd">确认</el-button>
-                <el-button @click="onDrawerClose">取消</el-button>
-            </template>
-        </el-drawer>
+        </form-drawer>
     </div>
 </template>
 
