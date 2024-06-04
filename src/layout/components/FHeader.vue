@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Aim, ArrowDown, CoffeeCup, Fold, FullScreen, Refresh, VideoCamera } from '@element-plus/icons-vue'
+import { Aim, ArrowDown, CoffeeCup, Expand, Fold, FullScreen, Refresh, VideoCamera } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/user.ts'
 import { ElMessageBox, ElNotification, FormRules } from 'element-plus'
 import { useFullscreen } from '@vueuse/core'
@@ -8,6 +8,7 @@ import { reactive, ref } from 'vue'
 import { updatePwdApi } from '@/api/user.ts'
 import { FormInstance } from 'element-plus/lib/components'
 import FormDrawer from '@/components/FormDrawer.vue'
+import { storeToRefs } from 'pinia'
 
 export interface UpdatePwdParams {
     password: string
@@ -15,7 +16,9 @@ export interface UpdatePwdParams {
     repassword: string
 }
 
-const { userInfo, logout } = useUserStore()
+const { userInfo, isCollapse } = storeToRefs(useUserStore())
+
+const { logout, setCollapse } = useUserStore()
 
 const { toggle, isFullscreen } = useFullscreen()
 
@@ -72,9 +75,9 @@ const formDrawerRef = ref<InstanceType<typeof FormDrawer>>()
             <CoffeeCup />
         </el-icon>
         <span class="text-xl ml-2">商城后台管理系统</span>
-        <el-tooltip effect="dark" content="收起菜单" placement="bottom">
-            <el-icon class="ml-16 cursor-pointer">
-                <Fold />
+        <el-tooltip effect="dark" :content="isCollapse ? '展开菜单' : '收起菜单'" placement="bottom">
+            <el-icon class="ml-16 cursor-pointer" @click="setCollapse(!isCollapse)">
+                <component :is="isCollapse ? Expand : Fold"></component>
             </el-icon>
         </el-tooltip>
         <el-tooltip effect="dark" content="刷新" placement="bottom">

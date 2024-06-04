@@ -15,7 +15,10 @@ withDefaults(
     },
 )
 
-const emits = defineEmits(['submit', 'cancel'])
+const emits = defineEmits<{
+    submit: []
+    cancel: []
+}>()
 
 const open = () => (drawer.value = true)
 
@@ -45,7 +48,7 @@ defineExpose({
 </script>
 
 <template>
-    <el-drawer v-model="drawer" :title="title" :size="size" :destroy-on-close="destroyOnClose">
+    <el-drawer v-model="drawer" :title="title" :size="size" :destroy-on-close="destroyOnClose" :show-close="false">
         <slot></slot>
         <template #footer>
             <el-button :loading="isLoading" @click="onSubmit">确认</el-button>

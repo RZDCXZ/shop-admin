@@ -13,6 +13,7 @@ const Home = () => import('@/pages/Home.vue')
 const NotFound = () => import('@/pages/NotFound.vue')
 const Login = () => import('@/pages/Login.vue')
 const Layout = () => import('@/layout/Layout.vue')
+const GoodsList = () => import('@/pages/goods/List.vue')
 
 const routes: RouteRecordRaw[] = [
     {
@@ -25,6 +26,14 @@ const routes: RouteRecordRaw[] = [
                 component: Home,
                 meta: {
                     title: '后台首页',
+                },
+            },
+            {
+                path: '/goods/list',
+                name: 'goodsList',
+                component: GoodsList,
+                meta: {
+                    title: '商品列表',
                 },
             },
         ],

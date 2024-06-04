@@ -7,7 +7,7 @@ interface LoginResult {
     token: string
 }
 
-interface Menus {
+export interface Menus {
     id: number
     rule_id: number
     status: number
@@ -34,7 +34,7 @@ export interface UserInfoResult {
         name: string
     }
     roleNames: string[]
-    menus: Menus
+    menus: Menus[]
 }
 
 export const loginApi = (data: LoginParams) =>
