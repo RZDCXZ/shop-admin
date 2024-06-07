@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import 'vue-router'
+import type { Menus } from '@/api/user.ts'
 
 declare module 'vue-router' {
     interface RouteMeta {
@@ -18,25 +19,8 @@ const GoodsList = () => import('@/pages/goods/List.vue')
 const routes: RouteRecordRaw[] = [
     {
         path: '/',
+        name: 'index',
         component: Layout,
-        children: [
-            {
-                path: '',
-                name: 'home',
-                component: Home,
-                meta: {
-                    title: '后台首页',
-                },
-            },
-            {
-                path: '/goods/list',
-                name: 'goodsList',
-                component: GoodsList,
-                meta: {
-                    title: '商品列表',
-                },
-            },
-        ],
     },
     {
         path: '/login',
@@ -50,9 +34,45 @@ const routes: RouteRecordRaw[] = [
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
 ]
 
+const asyncRoutes: RouteRecordRaw[] = [
+    {
+        path: '/',
+        name: '/',
+        component: Home,
+        meta: {
+            title: '后台首页',
+        },
+    },
+    {
+        path: '/goods/list',
+        name: '/goods/list',
+        component: GoodsList,
+        meta: {
+            title: '商品列表',
+        },
+    },
+]
+
 const router = createRouter({
     routes,
     history: createWebHashHistory(),
 })
 
 export default router
+
+// 动态注册路由
+export const addRoutes = (menus: Menus[]) => {
+    const findAndAddRouteByMenus = (arr: Menus[]) => {
+        arr.forEach((e) => {
+            const item = asyncRoutes.find((o) => o.path === e.frontpath)
+            if (item && !router.hasRoute(item.name as string)) {
+                router.addRoute('index', item)
+            }
+            if (e.child && e.child.length) {
+                findAndAddRouteByMenus(e.child)
+            }
+        })
+    }
+
+    findAndAddRouteByMenus(menus)
+}

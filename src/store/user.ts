@@ -5,6 +5,7 @@ import { UserInfoResult } from '@/api/user.ts'
 import { ref } from 'vue'
 import { setToken, removeToken } from '@/utils/auth.ts'
 import { useRouter } from 'vue-router'
+import { addRoutes } from '@/router'
 
 export const useUserStore = defineStore(
     'user',
@@ -16,6 +17,7 @@ export const useUserStore = defineStore(
         const menus = ref<Menus[]>([])
 
         const setMenus = (data: Menus[]) => {
+            addRoutes(data)
             menus.value = data
         }
 
