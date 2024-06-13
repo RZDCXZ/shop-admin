@@ -17,12 +17,22 @@ const { isCollapse } = storeToRefs(useUserStore())
             <el-aside class="fixed top-64px bottom-0" :width="isCollapse ? '64px' : '250px'">
                 <f-menu></f-menu>
             </el-aside>
+            <f-tag-list></f-tag-list>
             <el-main
-                class="fixed top-64px bottom-0 right-0 overflow-y-scroll"
+                class="fixed top-112px bottom-0 right-0 overflow-y-scroll"
                 :class="isCollapse ? 'left-64px' : 'left-250px'"
             >
-                <f-tag-list></f-tag-list>
-                <router-view></router-view>
+                <router-view v-slot="{ Component }">
+                    <transition
+                        :duration="330"
+                        enter-active-class="animate__animated animate__fadeIn"
+                        leave-active-class="animate__animated animate__fadeOut"
+                    >
+                        <keep-alive :max="10">
+                            <component :is="Component"></component>
+                        </keep-alive>
+                    </transition>
+                </router-view>
             </el-main>
         </el-container>
     </el-container>

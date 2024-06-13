@@ -2,13 +2,20 @@
 import { useUserStore } from '@/store/user.ts'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const { isCollapse, menus } = storeToRefs(useUserStore())
 
 const route = useRoute()
 
 const defaultActive = ref(route.path)
+
+watch(
+    () => route.path,
+    (newPath: string) => {
+        defaultActive.value = newPath
+    },
+)
 </script>
 
 <template>

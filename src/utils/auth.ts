@@ -17,3 +17,11 @@ export const setToken = (token: string) => {
 export const removeToken = () => {
     cookies.remove(TOKEN_NAME)
 }
+
+export const getCookies = (key: string) => {
+    return cookies.get(key)
+}
+
+export const setCookies = (key: string, value: any) => {
+    cookies.set(key, value)
+}
