@@ -2,10 +2,10 @@
 import FHeader from '@/layout/components/FHeader.vue'
 import FMenu from '@/layout/components/FMenu.vue'
 import FTagList from './components/FTagList.vue'
-import { useUserStore } from '@/store/user.ts'
+import { useMenuStore } from '@/store/menu.ts'
 import { storeToRefs } from 'pinia'
 
-const { isCollapse } = storeToRefs(useUserStore())
+const { isCollapse } = storeToRefs(useMenuStore())
 </script>
 
 <template>
@@ -24,7 +24,8 @@ const { isCollapse } = storeToRefs(useUserStore())
             >
                 <router-view v-slot="{ Component }">
                     <transition
-                        :duration="330"
+                        :duration="100"
+                        mode="out-in"
                         enter-active-class="animate__animated animate__fadeIn"
                         leave-active-class="animate__animated animate__fadeOut"
                     >

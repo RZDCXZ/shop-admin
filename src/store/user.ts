@@ -1,36 +1,25 @@
 import { defineStore } from 'pinia'
-import { loginApi, getUserInfoApi, logoutApi, Menus } from '@/api/user.ts'
+import { loginApi, getUserInfoApi, logoutApi } from '@/api/user.ts'
 import { LoginParams } from '@/pages/Login.vue'
 import { UserInfoResult } from '@/api/user.ts'
 import { ref } from 'vue'
 import { setToken, removeToken } from '@/utils/auth.ts'
 import { useRouter } from 'vue-router'
-import { addRoutes } from '@/router'
+import { useMenuStore } from '@/store/menu.ts'
 
 export const useUserStore = defineStore(
     'user',
     () => {
+        const { setMenus } = useMenuStore()
+
         const router = useRouter()
 
         const userInfo = ref<UserInfoResult | null>(null)
-
-        const menus = ref<Menus[]>([])
-
-        const setMenus = (data: Menus[]) => {
-            addRoutes(data)
-            menus.value = data
-        }
 
         const ruleNames = ref<string[]>([])
 
         const setRuleNames = (data: string[]) => {
             ruleNames.value = data
-        }
-
-        const isCollapse = ref(false)
-
-        const setCollapse = (value: boolean) => {
-            isCollapse.value = value
         }
 
         const setUserInfo = (data: UserInfoResult) => {
@@ -65,14 +54,11 @@ export const useUserStore = defineStore(
             login,
             logout,
             userInfo,
-            menus,
             ruleNames,
             setUserInfo,
             removeToken,
             removeUserInfo,
             getUserInfo,
-            isCollapse,
-            setCollapse,
         }
     },
     {
