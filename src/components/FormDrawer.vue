@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { isMobile } from '@/utils/tools.ts'
 
 const drawer = ref(false)
 
@@ -10,7 +11,7 @@ withDefaults(
         destroyOnClose?: boolean
     }>(),
     {
-        size: '45%',
+        size: isMobile() ? '90%' : '45%',
         destroyOnClose: false,
     },
 )
