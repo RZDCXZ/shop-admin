@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useUserStore } from '@/store/user.ts'
+import { useMenuStore } from '@/store/menu.ts'
 import { storeToRefs } from 'pinia'
 import { addRoutes } from '@/router'
 
 const router = useRouter()
 
-const userStore = useUserStore()
+const userStore = useMenuStore()
 
 const { menus } = storeToRefs(userStore)
 

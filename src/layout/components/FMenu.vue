@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { useUserStore } from '@/store/user.ts'
+import { useMenuStore } from '@/store/menu.ts'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 import { ref, watch } from 'vue'
+import { isMobile } from '@/utils/tools.ts'
 
-const { isCollapse, menus } = storeToRefs(useUserStore())
+const { isCollapse, menus } = storeToRefs(useMenuStore())
 
 const route = useRoute()
 
@@ -16,6 +17,28 @@ watch(
         defaultActive.value = newPath
     },
 )
+
+const onWindowResize = () => {
+    if (isMobile() && !isCollapse.value) {
+        isCollapse.value = true
+    }
+    if (!isMobile() && isCollapse.value) {
+        isCollapse.value = false
+    }
+}
+
+onWindowResize()
+
+let timer: any
+
+window.onresize = () => {
+    if (timer) {
+        clearTimeout(timer)
+    }
+    timer = setTimeout(() => {
+        onWindowResize()
+    }, 300)
+}
 </script>
 
 <template>

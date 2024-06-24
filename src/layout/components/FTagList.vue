@@ -4,14 +4,14 @@ import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router'
 import { ArrowDown } from '@element-plus/icons-vue'
 import { getCookies, setCookies } from '@/utils/auth.ts'
 import { TABS_NAME } from '@/constant/config.ts'
-import { useUserStore } from '@/store/user.ts'
+import { useMenuStore } from '@/store/menu.ts'
 import { storeToRefs } from 'pinia'
 import { TabCommand } from '@/constant/enum.ts'
 
 const route = useRoute()
 const router = useRouter()
 
-const userStore = useUserStore()
+const userStore = useMenuStore()
 
 const { isCollapse } = storeToRefs(userStore)
 

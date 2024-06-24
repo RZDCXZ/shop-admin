@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Aim, ArrowDown, CoffeeCup, Expand, Fold, FullScreen, Refresh, VideoCamera } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/user.ts'
+import { useMenuStore } from '@/store/menu.ts'
 import { ElMessageBox, ElNotification, FormRules } from 'element-plus'
 import { useFullscreen } from '@vueuse/core'
 import { refreshWindow } from '@/utils/tools.ts'
@@ -16,9 +17,13 @@ export interface UpdatePwdParams {
     repassword: string
 }
 
-const { userInfo, isCollapse } = storeToRefs(useUserStore())
+const { userInfo } = storeToRefs(useUserStore())
 
-const { logout, setCollapse } = useUserStore()
+const { isCollapse } = storeToRefs(useMenuStore())
+
+const { logout } = useUserStore()
+
+const { setCollapse } = useMenuStore()
 
 const { toggle, isFullscreen } = useFullscreen()
 
@@ -70,27 +75,27 @@ const formDrawerRef = ref<InstanceType<typeof FormDrawer>>()
 </script>
 
 <template>
-    <div class="h-full flex items-center text-light-50 px-8">
-        <el-icon size="22">
+    <div class="h-full flex items-center text-light-50 md:px-8">
+        <el-icon size="22" class="!hidden !md:block">
             <CoffeeCup />
         </el-icon>
-        <span class="text-xl ml-2">商城后台管理系统</span>
+        <span class="text-sm md:text-xl ml-2">商城后台管理系统</span>
         <el-tooltip effect="dark" :content="isCollapse ? '展开菜单' : '收起菜单'" placement="bottom">
-            <el-icon class="ml-16 cursor-pointer" @click="setCollapse(!isCollapse)">
+            <el-icon class="ml-16 cursor-pointer !hidden !md:block" @click="setCollapse(!isCollapse)">
                 <component :is="isCollapse ? Expand : Fold"></component>
             </el-icon>
         </el-tooltip>
         <el-tooltip effect="dark" content="刷新" placement="bottom">
-            <el-icon class="ml-8 cursor-pointer" @click="refreshWindow">
+            <el-icon class="ml-2 md:ml-8 cursor-pointer" @click="refreshWindow">
                 <Refresh />
             </el-icon>
         </el-tooltip>
         <div class="ml-auto flex items-center">
-            <el-icon>
+            <el-icon class="mr-8 !hidden !md:block">
                 <VideoCamera />
             </el-icon>
             <el-tooltip effect="dark" :content="isFullscreen ? '退出全屏' : '全屏'" placement="bottom">
-                <el-icon class="mx-8 cursor-pointer" @click="toggle">
+                <el-icon class="mr-8 cursor-pointer !hidden !md:block" @click="toggle">
                     <component :is="isFullscreen ? Aim : FullScreen"></component>
                 </el-icon>
             </el-tooltip>
