@@ -3,6 +3,7 @@ import { getStatistics1Api, getStatistics2Api, getStatistics3Api } from '@/api'
 import type { PanelItem } from '@/api'
 import { ref } from 'vue'
 import CountTo from '@/layout/components/CountTo.vue'
+import HomeNav from '@/components/HomeNav.vue'
 
 const panels = ref<Array<PanelItem>>([])
 
@@ -27,7 +28,7 @@ getStatistics()
                     <template #header>
                         <div class="flex justify-between">
                             <span>{{ item.title }}</span>
-                            <el-tag :type="item.uintColor" effect="plain">{{ item.unit }}</el-tag>
+                            <el-tag :type="item.unitColor" effect="plain">{{ item.unit }}</el-tag>
                         </div>
                     </template>
                     <span class="text-3xl font-bold text-gray-500"><count-to :value="item.value"></count-to></span>
@@ -61,6 +62,7 @@ getStatistics()
                 </el-skeleton>
             </template>
         </div>
+        <HomeNav></HomeNav>
     </div>
 </template>
 

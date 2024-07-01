@@ -15,6 +15,14 @@ const NotFound = () => import('@/pages/NotFound.vue')
 const Login = () => import('@/pages/Login.vue')
 const Layout = () => import('@/layout/Layout.vue')
 const GoodsList = () => import('@/pages/goods/List.vue')
+const CategoryList = () => import('@/pages/category/List.vue')
+const UserList = () => import('@/pages/user/List.vue')
+const OrderList = () => import('@/pages/order/List.vue')
+const CommentList = () => import('@/pages/comment/List.vue')
+const ImageList = () => import('@/pages/image/List.vue')
+const NoticeList = () => import('@/pages/notice/List.vue')
+const CouponList = () => import('@/pages/coupon/List.vue')
+const SettingBase = () => import('@/pages/setting/Base.vue')
 
 const routes: RouteRecordRaw[] = [
     {
@@ -49,6 +57,70 @@ const asyncRoutes: RouteRecordRaw[] = [
         component: GoodsList,
         meta: {
             title: '商品列表',
+        },
+    },
+    {
+        path: '/category/list',
+        name: '/category/list',
+        component: CategoryList,
+        meta: {
+            title: '分类列表',
+        },
+    },
+    {
+        path: '/user/list',
+        name: '/user/list',
+        component: UserList,
+        meta: {
+            title: '用户列表',
+        },
+    },
+    {
+        path: '/order/list',
+        name: '/order/list',
+        component: OrderList,
+        meta: {
+            title: '订单列表',
+        },
+    },
+    {
+        path: '/comment/list',
+        name: '/comment/list',
+        component: CommentList,
+        meta: {
+            title: '评价列表',
+        },
+    },
+    {
+        path: '/image/list',
+        name: '/image/list',
+        component: ImageList,
+        meta: {
+            title: '图库列表',
+        },
+    },
+    {
+        path: '/notice/list',
+        name: '/notice/list',
+        component: NoticeList,
+        meta: {
+            title: '公告列表',
+        },
+    },
+    {
+        path: '/coupon/list',
+        name: '/coupon/list',
+        component: CouponList,
+        meta: {
+            title: '优惠券列表',
+        },
+    },
+    {
+        path: '/setting/base',
+        name: '/setting/base',
+        component: SettingBase,
+        meta: {
+            title: '基础配置',
         },
     },
 ]

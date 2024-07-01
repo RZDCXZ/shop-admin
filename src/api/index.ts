@@ -4,7 +4,7 @@ export type PanelItem = {
     title: string
     value: number
     unit: string
-    uintColor: string
+    unitColor: string
     subTitle: string
     subValue: number | string
     subUnit: string

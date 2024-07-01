@@ -35,6 +35,7 @@ declare module 'vue' {
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     FormDrawer: typeof import('./src/components/FormDrawer.vue')['default']
+    HomeNav: typeof import('./src/components/HomeNav.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
