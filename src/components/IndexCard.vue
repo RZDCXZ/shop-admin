@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-    <div class="mb-6">
+    <div>
         <el-card shadow="never">
             <template #header>
                 <div class="flex justify-between items-center">
@@ -16,7 +16,7 @@ defineProps<{
                 </div>
             </template>
             <el-row :gutter="20">
-                <el-col v-for="(item, index) in data" :key="index" :span="6">
+                <el-col v-for="(item, index) in data" :key="index" :xs="12" :span="6" class="mb-4 md:mb-0">
                     <el-card shadow="hover">
                         <div class="flex flex-col items-center">
                             <span class="text-xl mb-2">{{ item.value }}</span>

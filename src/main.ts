@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from '@/router'
 import pinia from '@/store'
 import '@/router/permission.ts'
+import permission from '@/directives/permission.ts'
+import 'default-passive-events' // 解决chrome警告
 
 import 'element-plus/dist/index.css'
 import 'nprogress/nprogress.css'
@@ -20,4 +22,5 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 app.use(router)
 app.use(pinia)
+app.use(permission)
 app.mount('#app')

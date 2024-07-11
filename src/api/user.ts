@@ -33,7 +33,7 @@ export interface UserInfoResult {
         id: number
         name: string
     }
-    roleNames: string[]
+    ruleNames: string[]
     menus: Menus[]
 }
 

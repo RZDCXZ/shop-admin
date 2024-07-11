@@ -31,14 +31,14 @@ getStatistics2()
 
 <template>
     <div>
-        <el-row :gutter="20">
+        <el-row v-permission="['getStatistics1,GET']" :gutter="20">
             <template v-if="panels.length > 0">
-                <el-col v-for="(item, index) in panels" :key="index" :xs="24" :span="6" class="mb-4 md:mb-0">
+                <el-col v-for="(item, index) in panels" :key="index" :xs="24" :span="6" class="mb-6 md:mb-0">
                     <el-card shadow="hover">
                         <template #header>
                             <div class="flex justify-between">
                                 <span>{{ item.title }}</span>
-                                <el-tag :type="item.unitColor" effect="plain">{{ item.unit }}</el-tag>
+                                <el-tag :type="item.unitColor || 'info'" effect="plain">{{ item.unit }}</el-tag>
                             </div>
                         </template>
                         <span class="text-3xl font-bold text-gray-500"><count-to :value="item.value"></count-to></span>
@@ -52,7 +52,7 @@ getStatistics2()
                 </el-col>
             </template>
             <template v-else>
-                <el-col v-for="i in 4" :key="i" :xs="24" :span="6" class="mb-4 md:mb-0">
+                <el-col v-for="i in 4" :key="i" :xs="24" :span="6" class="mb-6 md:mb-0">
                     <el-skeleton animated loading>
                         <template #template>
                             <el-card shadow="hover">
@@ -75,13 +75,13 @@ getStatistics2()
                 </el-col>
             </template>
         </el-row>
-        <HomeNav class="my-6"></HomeNav>
+        <HomeNav class="mb-6 md:mt-6"></HomeNav>
         <el-row :gutter="20">
             <el-col :xs="24" :span="12" class="mb-6 md:mb-0">
-                <IndexChart></IndexChart>
+                <IndexChart v-permission="['getStatistics3,GET']"></IndexChart>
             </el-col>
-            <el-col :xs="24" :span="12">
-                <IndexCard title="店铺及商品提示" tip="店铺及商品提示" :data="goods"></IndexCard>
+            <el-col v-permission="['getStatistics2,GET']" :xs="24" :span="12">
+                <IndexCard title="店铺及商品提示" tip="店铺及商品提示" :data="goods" class="mb-6"></IndexCard>
                 <IndexCard title="交易提示" tip="需要立即处理的交易订单" :data="order"></IndexCard>
             </el-col>
         </el-row>

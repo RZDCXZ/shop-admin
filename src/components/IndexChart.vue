@@ -49,13 +49,15 @@ const getData = () => {
 
 const chartRef = ref<InstanceType<typeof HTMLDivElement>>()
 
-useResizeObserver(chartRef, () => myChart.resize())
+useResizeObserver(chartRef, () => myChart && myChart.resize())
 
 onMounted(() => {
     const chartDom = document.getElementById('chart')
-    myChart = echarts.init(chartDom)
 
-    getData()
+    if (chartDom) {
+        myChart = echarts.init(chartDom)
+        getData()
+    }
 })
 
 // 关闭页面前销毁chart示例防止白屏
@@ -66,13 +68,13 @@ onBeforeUnmount(() => myChart && echarts.dispose(myChart))
     <el-card shadow="never">
         <template #header>
             <div class="flex justify-between items-center">
-                <span class="text-sm">订单统计</span>
+                <span class="text-xs md:text-sm">订单统计</span>
                 <div>
                     <el-check-tag
                         v-for="(item, index) in options"
                         :key="index"
                         :checked="item.value === current"
-                        class="mx-1"
+                        class="mx-0.5 !text-12px !px-2 md:mx-1 !md:text-14px !md:px-4"
                         @change="onCheckTagChange(item.value)"
                         >{{ item.label }}</el-check-tag
                     >

@@ -7,14 +7,8 @@ const router = useRouter()
 
 <template>
     <el-row :gutter="20">
-        <el-col
-            v-for="item in HomeNavList"
-            :key="item.path"
-            :xs="12"
-            :span="3"
-            class="cursor-pointer col-5 md:col-1 mb-2 md:mb-0"
-        >
-            <el-card shadow="hover" @click="router.push(item.path)">
+        <el-col v-for="item in HomeNavList" :key="item.path" :xs="12" :span="3">
+            <el-card shadow="hover" class="cursor-pointer col-5 md:col-1 mb-2 md:mb-0" @click="router.push(item.path)">
                 <div class="flex flex-col items-center">
                     <el-icon :size="25" :class="item.color">
                         <component :is="item.icon"></component>

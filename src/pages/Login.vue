@@ -80,7 +80,7 @@ onUnmounted(() => {
     <el-row class="w-screen h-screen">
         <el-col :xs="24" :span="16" class="bg-blue-500 dark:bg-black !flex-center flex-col text-light-50">
             <div class="font-bold text-2xl md:text-5xl px-4">欢迎光临</div>
-            <div class="text-sm md:text-xl text-gray-50 mt-4 px-4">
+            <div class="text-sm text-center md:text-xl text-gray-50 mt-4 px-4">
                 商城后台管理系统，技术栈：vue3+typescript+vite+unocss+element-plus
             </div>
         </el-col>
