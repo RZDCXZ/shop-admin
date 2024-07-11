@@ -1,5 +1,4 @@
 import NProgress from 'nprogress'
-import { breakpoints } from '@/constant/config.ts'
 
 export const showProgress = () => {
     NProgress.start()
@@ -14,10 +13,10 @@ export const refreshWindow = () => {
 }
 
 export const isMobile = () => {
-    if (document.body.clientWidth < Number(breakpoints.md.slice(0, -2))) {
+    if (document.body.clientWidth < 768) {
         return true
     }
-    if (document.body.clientWidth > Number(breakpoints.md.slice(0, -2))) {
+    if (document.body.clientWidth > 768) {
         return false
     }
 }

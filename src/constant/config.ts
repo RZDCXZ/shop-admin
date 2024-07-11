@@ -12,15 +12,15 @@ export const TOKEN_NAME: string = 'admin_token'
 export const TABS_NAME: string = 'tabList'
 
 // unocss的响应式断点
-export const breakpoints = {
-    xxs: '0px',
-    xs: '320px',
-    sm: '480px',
-    md: '768px',
-    lg: '1024px',
-    xl: '1280px',
-    xxl: '1600px',
-}
+// export const breakpoints = {
+//     xxs: '0px',
+//     xs: '320px',
+//     sm: '480px',
+//     md: '768px',
+//     lg: '1024px',
+//     xl: '1280px',
+//     xxl: '1600px',
+// }
 
 // 首页的navbar配置
 export const HomeNavList: HomeNavList = [
