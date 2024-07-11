@@ -26,4 +26,24 @@ onMounted(() => {
     height: 3px !important;
     background: #f4f4f4 !important;
 }
+
+*::-webkit-scrollbar {
+    /*滚动条整体样式*/
+    width: 6px; /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+}
+
+*::-webkit-scrollbar-thumb {
+    /*滚动条里面深色条*/
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px rgba(236, 236, 236, 0.1);
+    background: #ccc;
+}
+
+*::-webkit-scrollbar-track {
+    /*滚动条里面轨道*/
+    box-shadow: inset 0 0 5px rgba(236, 236, 236, 0.1);
+    border-radius: 10px;
+    background: #ededed;
+}
 </style>

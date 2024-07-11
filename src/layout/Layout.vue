@@ -19,7 +19,7 @@ const { isCollapse } = storeToRefs(useMenuStore())
             </el-aside>
             <f-tag-list></f-tag-list>
             <el-main
-                class="fixed top-112px bottom-0 right-0 overflow-y-scroll"
+                class="fixed top-112px bottom-0 right-0 overflow-y-scroll bg-gray-50"
                 :class="isCollapse ? 'left-64px' : 'left-250px'"
             >
                 <router-view v-slot="{ Component }">

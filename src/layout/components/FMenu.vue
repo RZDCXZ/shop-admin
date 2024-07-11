@@ -48,7 +48,7 @@ window.onresize = () => {
         :collapse="isCollapse"
         :collapse-transition="false"
         :unique-opened="true"
-        class="wh-full overflow-x-hidden"
+        class="wh-full overflow-x-hidden !border-0"
     >
         <template v-for="(item, index) in menus" :key="index">
             <el-sub-menu v-if="item.child && item.child.length" :key="index" :index="item.name">
