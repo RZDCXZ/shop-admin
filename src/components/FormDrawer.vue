@@ -8,11 +8,13 @@ withDefaults(
     defineProps<{
         title: string
         size?: string
+        isShowFooter?: boolean
         destroyOnClose?: boolean
     }>(),
     {
-        size: isMobile() ? '90%' : '45%',
+        size: isMobile() ? '80%' : '45%',
         destroyOnClose: false,
+        isShowFooter: true,
     },
 )
 
@@ -52,7 +54,7 @@ defineExpose({
     <el-drawer v-model="drawer" :title="title" :size="size" :destroy-on-close="destroyOnClose" :show-close="false">
         <slot></slot>
         <template #footer>
-            <div class="text-align-left">
+            <div v-if="isShowFooter" class="text-align-left">
                 <el-button :loading="isLoading" type="primary" @click="onSubmit">确认</el-button>
                 <el-button @click="onCancel">取消</el-button>
             </div>

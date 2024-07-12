@@ -11,6 +11,9 @@ import { computed, ref } from 'vue'
 import FormDrawer from '@/components/FormDrawer.vue'
 import { FormInstance } from 'element-plus/lib/components'
 import { ElNotification, FormRules } from 'element-plus'
+import { isMobile } from '@/utils/tools.ts'
+
+const isLoading = ref(false)
 
 const activeId = ref(0)
 
@@ -22,18 +25,25 @@ const categoryTotal = ref(0)
 
 const editId = ref(0)
 
+const emits = defineEmits(['change'])
+
 const drawerTitle = computed(() => (editId.value ? '编辑' : '新增'))
 
 const imageCategoryList = ref<ImageCategoryListResult['list']>([])
 
 const onImageCategoryClick = (category: ImageCategoryListResult['list'][0]) => {
     activeId.value = category.id
+    emits('change', activeId.value)
 }
 
-const getImageList = async (pageNum: number) => {
+const getCategoryList = async (pageNum: number) => {
+    isLoading.value = true
+
     currentPage.value = pageNum
 
-    const result = await getImageCategoryListApi(currentPage.value, limit.value)
+    const result = await getImageCategoryListApi(currentPage.value, limit.value).finally(
+        () => (isLoading.value = false),
+    )
 
     imageCategoryList.value = result.data.list
 
@@ -42,7 +52,7 @@ const getImageList = async (pageNum: number) => {
     const item = result.data.list[0]
     // 默认选中第一个
     if (item) {
-        activeId.value = item.id
+        onImageCategoryClick(item)
     }
 }
 
@@ -60,7 +70,7 @@ const onDrawerConfirm = () => {
         } else {
             await addImageCategoryApi(form.value.name, form.value.order).finally(() => drawerRef.value?.hideLoading())
         }
-        await getImageList(editId.value ? currentPage.value : 1)
+        await getCategoryList(editId.value ? currentPage.value : 1)
         drawerRef.value?.close()
         ElNotification({
             type: 'success',
@@ -99,7 +109,7 @@ const onEditClick = (row: ImageCategoryListResult['list'][0]) => {
 
 const onDeleteClick = async (categoryId: number) => {
     await deleteImageCategoryApi(categoryId)
-    await getImageList(currentPage.value)
+    await getCategoryList(currentPage.value)
     ElNotification({
         type: 'success',
         message: '删除分类成功',
@@ -107,7 +117,7 @@ const onDeleteClick = async (categoryId: number) => {
     })
 }
 
-getImageList(1)
+getCategoryList(1)
 
 defineExpose({
     createDrawer,
@@ -116,7 +126,7 @@ defineExpose({
 </script>
 
 <template>
-    <el-aside class="border-r relative">
+    <el-aside v-loading="isLoading" class="border-r relative !w-100px !md:w-220px">
         <div class="absolute top-0 left-0 right-0 bottom-50px overflow-y-scroll">
             <AsideList
                 v-for="(item, index) in imageCategoryList"
@@ -130,12 +140,13 @@ defineExpose({
         </div>
         <div class="h-50px flex-center absolute left-0 right-0 bottom-0 border-t">
             <el-pagination
+                :small="isMobile()"
                 layout="prev, next"
                 background
                 :total="categoryTotal"
                 :current-page="currentPage"
                 :page-size="limit"
-                @current-change="getImageList"
+                @current-change="getCategoryList"
             />
         </div>
         <FormDrawer ref="drawerRef" :title="drawerTitle" @submit="onDrawerConfirm">

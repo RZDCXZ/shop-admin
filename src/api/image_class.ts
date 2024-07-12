@@ -10,19 +10,6 @@ export interface ImageCategoryListResult {
     totalCount: number
 }
 
-interface CategoryImageListResult {
-    list: Array<{
-        id: number
-        url: string
-        name: string
-        path: string
-        create_time: string
-        update_time: string
-        image_class_id: number
-    }>
-    totalCount: number
-}
-
 interface AddImageCategoryResult {
     name: string
     order: string | number
@@ -33,16 +20,6 @@ interface AddImageCategoryResult {
 export const getImageCategoryListApi = (pageNum: number = 1, pageSize: number = 100) =>
     request<ImageCategoryListResult>({
         url: `/admin/image_class/${pageNum}`,
-        method: 'get',
-        params: {
-            limit: pageSize,
-        },
-    })
-
-// 获取指定分类下的图片列表
-export const getImageListByCategoryApi = (categoryId: number, pageNum: number = 1, pageSize: number = 10) =>
-    request<CategoryImageListResult>({
-        url: `/admin/image_class/${categoryId}/image/${pageNum}`,
         method: 'get',
         params: {
             limit: pageSize,

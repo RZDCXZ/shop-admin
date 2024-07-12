@@ -19,8 +19,8 @@ const emits = defineEmits(['edit', 'delete'])
         :class="{ 'bg-blue-50': active }"
     >
         <span class="truncate"><slot></slot></span>
-        <el-button class="ml-auto !px-1" text type="primary" size="small" @click="emits('edit')">
-            <el-icon :size="12"><Edit></Edit></el-icon>
+        <el-button class="ml-auto !px-1 !hidden !md:block" text type="primary" size="small" @click.stop="emits('edit')">
+            <el-icon :size="14"><Edit></Edit></el-icon>
         </el-button>
         <el-popconfirm
             title="确定删除该分类吗?"
@@ -29,8 +29,8 @@ const emits = defineEmits(['edit', 'delete'])
             @confirm="emits('delete')"
         >
             <template #reference>
-                <el-button class="!px-1" text type="primary" size="small">
-                    <el-icon :size="12"><Close></Close></el-icon>
+                <el-button class="!px-1 !hidden !md:block" text type="primary" size="small">
+                    <el-icon :size="14"><Close></Close></el-icon>
                 </el-button>
             </template>
         </el-popconfirm>
