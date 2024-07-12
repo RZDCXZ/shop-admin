@@ -52,8 +52,10 @@ defineExpose({
     <el-drawer v-model="drawer" :title="title" :size="size" :destroy-on-close="destroyOnClose" :show-close="false">
         <slot></slot>
         <template #footer>
-            <el-button :loading="isLoading" @click="onSubmit">确认</el-button>
-            <el-button @click="onCancel">取消</el-button>
+            <div class="text-align-left">
+                <el-button :loading="isLoading" type="primary" @click="onSubmit">确认</el-button>
+                <el-button @click="onCancel">取消</el-button>
+            </div>
         </template>
     </el-drawer>
 </template>

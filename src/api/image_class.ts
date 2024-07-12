@@ -61,7 +61,7 @@ export const addImageCategoryApi = (name: string, order: number) =>
     })
 
 // 修改图库分类
-export const editImageCategoryApi = (categoryId: string, name: string, order: number) =>
+export const editImageCategoryApi = (categoryId: number, name: string, order: number) =>
     request<boolean>({
         url: `/admin/image_class/${categoryId}`,
         method: 'post',
@@ -72,7 +72,7 @@ export const editImageCategoryApi = (categoryId: string, name: string, order: nu
     })
 
 // 删除图库分类
-export const deleteImageCategoryApi = (categoryId: string) =>
+export const deleteImageCategoryApi = (categoryId: number) =>
     request<boolean>({
         url: `/admin/image_class/${categoryId}/delete`,
         method: 'post',
