@@ -150,7 +150,7 @@ defineExpose({
             />
         </div>
         <FormDrawer ref="drawerRef" :title="drawerTitle" @submit="onDrawerConfirm">
-            <el-form ref="formRef" :model="form" :rules="rules" label-width="120">
+            <el-form ref="formRef" :model="form" :rules="rules" label-width="100px">
                 <el-form-item label="分类名称:" prop="name">
                     <el-input v-model="form.name" placeholder="请输入分类名称"></el-input>
                 </el-form-item>
