@@ -1,10 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { getImageListByCategoryApi, CategoryImageListResult, editImageNameApi, deleteImageApi } from '@/api/image.ts'
 import { isMobile, showPrompt } from '@/utils/tools.ts'
 import { ElNotification } from 'element-plus'
 import UploadFile from '@/components/UploadFile.vue'
 import FormDrawer from '@/components/FormDrawer.vue'
+
+withDefaults(
+    defineProps<{
+        openChoice: boolean
+    }>(),
+    {
+        openChoice: false,
+    },
+)
 
 const isLoading = ref(false)
 
@@ -24,13 +33,18 @@ const showDrawer = () => drawerRef.value?.open()
 
 const closeDrawer = () => drawerRef.value?.close()
 
+const emits = defineEmits(['choice'])
+
 const getImageList = async (pageNum: number) => {
     isLoading.value = true
     currentPage.value = pageNum
     const result = await getImageListByCategoryApi(categoryId.value, currentPage.value).finally(
         () => (isLoading.value = false),
     )
-    imageList.value = result.data.list
+    imageList.value = result.data.list.map((item) => {
+        item.checked = false
+        return item
+    })
     total.value = result.data.totalCount
 }
 
@@ -64,6 +78,20 @@ const onDeleteClick = async (id: number) => {
 
 const onUploadSuccess = () => getImageList(1)
 
+const checkedImage = computed(() => imageList.value.filter((o) => o.checked))
+
+const onCheckChange = (item: CategoryImageListResult['list'][0] & { checked: boolean }) => {
+    if (item.checked && checkedImage.value.length > 1) {
+        item.checked = false
+        return ElNotification({
+            type: 'warning',
+            message: '最多只能选一张',
+            duration: 2000,
+        })
+    }
+    emits('choice', checkedImage.value)
+}
+
 defineExpose({
     loadData,
     showDrawer,
@@ -76,7 +104,7 @@ defineExpose({
         <div class="absolute top-3 left-3 right-3 bottom-50px overflow-y-scroll overflow-x-hidden">
             <el-row :gutter="10">
                 <el-col v-for="(item, index) in imageList" :key="index" :xs="24" :span="6">
-                    <el-card shadow="hover" class="mb-3">
+                    <el-card shadow="hover" class="mb-3" :class="{ '!border-blue-500': item.checked }">
                         <el-image
                             :src="item.url"
                             :initial-index="0"
@@ -86,6 +114,7 @@ defineExpose({
                         ></el-image>
                         <div class="text-center truncate text-sm text-gray-500">{{ item.name }}</div>
                         <div class="flex-center p-2">
+                            <el-checkbox v-if="openChoice" v-model="item.checked" @change="onCheckChange(item)" />
                             <el-button type="primary" size="small" text @click="onRenameClick(item)">重命名</el-button>
                             <el-popconfirm
                                 title="确定删除该图片吗?"

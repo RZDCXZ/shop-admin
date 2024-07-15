@@ -22,6 +22,7 @@ const CommentList = () => import('@/pages/comment/List.vue')
 const ImageList = () => import('@/pages/image/List.vue')
 const NoticeList = () => import('@/pages/notice/List.vue')
 const CouponList = () => import('@/pages/coupon/List.vue')
+const ManagerList = () => import('@/pages/manager/List.vue')
 const SettingBase = () => import('@/pages/setting/Base.vue')
 
 const routes: RouteRecordRaw[] = [
@@ -113,6 +114,14 @@ const asyncRoutes: RouteRecordRaw[] = [
         component: CouponList,
         meta: {
             title: '优惠券列表',
+        },
+    },
+    {
+        path: '/manager/list',
+        name: '/manager/list',
+        component: ManagerList,
+        meta: {
+            title: '管理员管理',
         },
     },
     {

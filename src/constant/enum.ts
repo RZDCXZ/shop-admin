@@ -4,6 +4,12 @@ export enum Super {
     not = 0,
 }
 
+// 禁用启用的码值
+export enum Status {
+    disable = 0,
+    enable = 1,
+}
+
 // tab栏下拉框的枚举
 export enum TabCommand {
     clearOther = 'clearOther', // 关闭其他
