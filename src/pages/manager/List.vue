@@ -8,6 +8,7 @@ import {
     getManagerListApi,
     ManagerListResult,
 } from '@/api/manager.ts'
+import ListHeader from '@/components/ListHeader.vue'
 import { computed, ref } from 'vue'
 import FormDrawer from '@/components/FormDrawer.vue'
 import { isMobile } from '@/utils/tools.ts'
@@ -159,16 +160,7 @@ getManagerList()
                     <el-button @click="onResetClick">重置</el-button>
                 </el-form-item>
             </el-form>
-            <div class="flex items-center justify-between mb-4">
-                <el-button type="primary" size="small" @click="onAddClick">新增</el-button>
-                <el-tooltip effect="dark" content="刷新数据" placement="top">
-                    <el-button text @click="getManagerList(1)">
-                        <el-icon :size="20">
-                            <Refresh></Refresh>
-                        </el-icon>
-                    </el-button>
-                </el-tooltip>
-            </div>
+            <ListHeader @add="onAddClick" @refresh="getManagerList(1)"></ListHeader>
             <el-table v-loading="isLoading" :data="tableData" stripe>
                 <el-table-column label="管理员">
                     <template #default="{ row }">

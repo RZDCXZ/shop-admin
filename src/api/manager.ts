@@ -37,7 +37,7 @@ export interface AddManagerResult {
 export interface AddManagerForm {
     username: string
     password: string
-    role_id: number
+    role_id: number | null
     status: Status
     avatar: string
 }

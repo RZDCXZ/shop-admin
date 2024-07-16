@@ -6,6 +6,7 @@ import { ElNotification, FormRules } from 'element-plus'
 import { isMobile } from '@/utils/tools.ts'
 import FormDrawer from '@/components/FormDrawer.vue'
 import { FormInstance } from 'element-plus/lib/components'
+import ListHeader from '@/components/ListHeader.vue'
 
 const currentPage = ref(1)
 
@@ -33,7 +34,7 @@ const rules = ref<FormRules<{ title: string; content: string }>>({
 
 const tableData = ref<NoticeListResult['list']>([])
 
-const getNoticeList = async (pageNum: number) => {
+const getNoticeList = async (pageNum: number = 1) => {
     isLoading.value = true
     currentPage.value = pageNum
     const result = await getNoticeListApi(currentPage.value).finally(() => (isLoading.value = false))
@@ -97,16 +98,7 @@ getNoticeList(1)
 <template>
     <div>
         <el-card shadow="hover" class="!border-0">
-            <div class="flex items-center justify-between mb-4">
-                <el-button type="primary" size="small" @click="onAddClick">新增</el-button>
-                <el-tooltip effect="dark" content="刷新数据" placement="top">
-                    <el-button text @click="getNoticeList(1)">
-                        <el-icon :size="20">
-                            <Refresh></Refresh>
-                        </el-icon>
-                    </el-button>
-                </el-tooltip>
-            </div>
+            <ListHeader @add="onAddClick" @refresh="getNoticeList(1)"></ListHeader>
             <el-table v-loading="isLoading" :data="tableData" stripe>
                 <el-table-column prop="title" label="公告标题"></el-table-column>
                 <el-table-column prop="create_time" label="发布时间"></el-table-column>

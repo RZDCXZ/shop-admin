@@ -23,6 +23,7 @@ const ImageList = () => import('@/pages/image/List.vue')
 const NoticeList = () => import('@/pages/notice/List.vue')
 const CouponList = () => import('@/pages/coupon/List.vue')
 const ManagerList = () => import('@/pages/manager/List.vue')
+const AccessList = () => import('@/pages/access/List.vue')
 const SettingBase = () => import('@/pages/setting/Base.vue')
 
 const routes: RouteRecordRaw[] = [
@@ -122,6 +123,14 @@ const asyncRoutes: RouteRecordRaw[] = [
         component: ManagerList,
         meta: {
             title: '管理员管理',
+        },
+    },
+    {
+        path: '/access/list',
+        name: '/access/list',
+        component: AccessList,
+        meta: {
+            title: '菜单权限管理',
         },
     },
     {
