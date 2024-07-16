@@ -1,14 +1,38 @@
 <script setup lang="ts">
 import { Refresh } from '@element-plus/icons-vue'
+import { computed } from 'vue'
 
-const emits = defineEmits(['add', 'refresh'])
+const props = withDefaults(
+    defineProps<{
+        layout: string
+    }>(),
+    {
+        layout: 'add,refresh',
+    },
+)
+
+const btns = computed(() => props.layout.split(','))
+
+const emits = defineEmits(['add', 'refresh', 'delete'])
 </script>
 
 <template>
     <div class="flex items-center justify-between mb-4">
-        <el-button type="primary" size="small" @click="emits('add')">新增</el-button>
+        <div>
+            <el-button v-if="btns.includes('add')" type="primary" size="small" @click="emits('add')">新增</el-button>
+            <el-popconfirm
+                title="确定删除所有选中项吗?"
+                confirm-button-text="确定"
+                cancel-button-text="取消"
+                @confirm="emits('delete')"
+            >
+                <template #reference>
+                    <el-button v-if="btns.includes('delete')" type="danger" size="small">批量删除</el-button>
+                </template>
+            </el-popconfirm>
+        </div>
         <el-tooltip effect="dark" content="刷新数据" placement="top">
-            <el-button text @click="emits('refresh')">
+            <el-button v-if="btns.includes('refresh')" text @click="emits('refresh')">
                 <el-icon :size="20">
                     <Refresh></Refresh>
                 </el-icon>

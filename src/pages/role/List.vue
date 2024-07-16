@@ -98,6 +98,7 @@ const onDeleteClick = async (id: number) => {
 }
 
 const onAddClick = () => {
+    formRef.value?.resetFields()
     currentId.value = 0
     form.value.name = ''
     form.value.status = Status.enable
