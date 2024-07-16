@@ -15,6 +15,7 @@ import FormDrawer from '@/components/FormDrawer.vue'
 import { ElNotification, FormRules } from 'element-plus'
 import { FormInstance } from 'element-plus/lib/components'
 import IconSelect from '@/components/IconSelect.vue'
+import { isMobile } from '@/utils/tools.ts'
 
 const isLoading = ref(false)
 
@@ -160,7 +161,7 @@ getAccessList()
                             <component :is="data.icon"></component>
                         </el-icon>
                         <span>{{ data.name }}</span>
-                        <div class="ml-auto" @click.stop="() => {}">
+                        <div v-if="!isMobile()" class="ml-auto" @click.stop="() => {}">
                             <el-switch
                                 :model-value="data.status"
                                 :active-value="Status.enable"
@@ -203,7 +204,7 @@ getAccessList()
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="名称" prop="name">
-                    <el-input v-model="form.name" placeholder="请输入名称" class="!w-1/3"></el-input>
+                    <el-input v-model="form.name" placeholder="请输入名称" class="!w-1/2"></el-input>
                 </el-form-item>
                 <el-form-item v-if="form.menu === 1" label="菜单图标" prop="icon">
                     <IconSelect v-model="form.icon"></IconSelect>
