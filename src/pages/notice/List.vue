@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Refresh } from '@element-plus/icons-vue'
 import { computed, ref } from 'vue'
 import { getNoticeListApi, deleteNoticeApi, NoticeListResult, addNoticeApi, editNoticeApi } from '@/api/notice.ts'
 import { ElNotification, FormRules } from 'element-plus'
