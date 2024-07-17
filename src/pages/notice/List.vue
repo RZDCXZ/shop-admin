@@ -78,6 +78,7 @@ const onDeleteClick = async (id: number) => {
 
 const onAddClick = () => {
     currentId.value = 0
+    formRef.value?.resetFields()
     form.value.title = ''
     form.value.content = ''
     drawerRef.value?.open()

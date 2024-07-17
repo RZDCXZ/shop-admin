@@ -8,7 +8,7 @@ import FormDrawer from '@/components/FormDrawer.vue'
 
 withDefaults(
     defineProps<{
-        openChoice: boolean
+        openChoice?: boolean
     }>(),
     {
         openChoice: false,

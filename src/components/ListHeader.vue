@@ -4,7 +4,7 @@ import { computed } from 'vue'
 
 const props = withDefaults(
     defineProps<{
-        layout: string
+        layout?: string
     }>(),
     {
         layout: 'add,refresh',
@@ -21,13 +21,14 @@ const emits = defineEmits(['add', 'refresh', 'delete'])
         <div>
             <el-button v-if="btns.includes('add')" type="primary" size="small" @click="emits('add')">新增</el-button>
             <el-popconfirm
+                v-if="btns.includes('delete')"
                 title="确定删除所有选中项吗?"
                 confirm-button-text="确定"
                 cancel-button-text="取消"
                 @confirm="emits('delete')"
             >
                 <template #reference>
-                    <el-button v-if="btns.includes('delete')" type="danger" size="small">批量删除</el-button>
+                    <el-button type="danger" size="small">批量删除</el-button>
                 </template>
             </el-popconfirm>
         </div>
