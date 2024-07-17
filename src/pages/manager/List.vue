@@ -71,6 +71,7 @@ const getManagerList = async (p: number = 1) => {
 
         return item
     })
+    total.value = result.data.totalCount
     roles.value = result.data.roles
 }
 
