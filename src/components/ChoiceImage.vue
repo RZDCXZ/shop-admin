@@ -1,13 +1,22 @@
 <script setup lang="ts">
-import { Plus } from '@element-plus/icons-vue'
+import { CircleClose, Plus } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 import ImageMain from '@/components/ImageMain.vue'
 import ImageAside from '@/components/ImageAside.vue'
 import { isMobile } from '@/utils/tools.ts'
+import { ElNotification } from 'element-plus'
 
-const props = defineProps<{
-    modelValue: string
-}>()
+const props = withDefaults(
+    defineProps<{
+        modelValue?: string | string[]
+        limit?: number
+        preview?: boolean
+    }>(),
+    {
+        limit: 1,
+        preview: true,
+    },
+)
 
 const emits = defineEmits(['update:modelValue'])
 
@@ -34,21 +43,75 @@ const onChoice = (e: Array<any>) => {
 }
 
 const onDialogConfirm = () => {
-    if (urls.length) {
-        emits('update:modelValue', urls[0])
+    let value = []
+    if (props.limit === 1) {
+        value = urls[0]
+    } else {
+        value = props.preview ? [...props.modelValue, ...urls] : [...urls]
+        if (value.length > props.limit) {
+            let limit = props.preview ? props.limit - props.modelValue.length : props.limit
+            return ElNotification({
+                type: 'warning',
+                message: `最多还能选择${limit}张`,
+                duration: 2000,
+            })
+        }
     }
-    dialogVisible.value = false
+    if (value && props.preview) {
+        emits('update:modelValue', value)
+    }
+    if (!props.preview && typeof callbackFunc.value === 'function') {
+        callbackFunc.value(value)
+    }
+    close()
 }
+
+const onRemoveClick = (url: string) => {
+    emits(
+        'update:modelValue',
+        (props.modelValue as string[]).filter((u) => u !== url),
+    )
+}
+
+const callbackFunc = ref<object | null>(null)
+
+const open = (callback = null) => {
+    callbackFunc.value = callback
+    dialogVisible.value = true
+}
+
+const close = () => (dialogVisible.value = false)
+
+defineExpose({
+    open,
+    close,
+})
 </script>
 
 <template>
-    <div class="flex">
-        <div v-if="modelValue">
-            <el-image :src="modelValue" fit="cover" class="w-100px h-100px rounded border mr-2"></el-image>
+    <div class="flex flex-wrap">
+        <div v-if="modelValue && preview">
+            <el-image
+                v-if="typeof modelValue === 'string'"
+                :src="modelValue"
+                fit="cover"
+                class="w-100px h-100px rounded border mr-2"
+            ></el-image>
+            <div v-else class="flex flex-wrap">
+                <div v-for="(url, index) in modelValue" :key="index" class="relative mx-1 mb-2 w-100px h-100px">
+                    <el-icon
+                        class="bg-white rounded-full !absolute right-5px top-5px cursor-pointer z-10"
+                        @click="onRemoveClick(url)"
+                        ><CircleClose></CircleClose
+                    ></el-icon>
+                    <el-image :src="url" fit="cover" class="w-100px h-100px rounded border mr-2"></el-image>
+                </div>
+            </div>
         </div>
         <div
-            class="w100px h100px rounded border flex-center cursor-pointer hover:bg-gray-100"
-            @click="dialogVisible = true"
+            v-if="preview"
+            class="w-100px h-100px rounded border flex-center cursor-pointer hover:bg-gray-100"
+            @click="open"
         >
             <el-icon :size="25" class="!text-gray-500"><Plus></Plus></el-icon>
         </div>
@@ -60,7 +123,7 @@ const onDialogConfirm = () => {
                 </el-header>
                 <el-container>
                     <ImageAside ref="imageAsideRef" @change="onCategoryChange"></ImageAside>
-                    <ImageMain ref="imageMainRef" open-choice @choice="onChoice"></ImageMain>
+                    <ImageMain ref="imageMainRef" :limit="limit" open-choice @choice="onChoice"></ImageMain>
                 </el-container>
             </el-container>
             <template #footer>

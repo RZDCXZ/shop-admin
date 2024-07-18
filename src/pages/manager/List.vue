@@ -17,6 +17,8 @@ import { ElNotification, FormRules } from 'element-plus'
 import { Refresh } from '@element-plus/icons-vue'
 import { FormInstance } from 'element-plus/lib/components'
 import ChoiceImage from '@/components/ChoiceImage.vue'
+import Search from '@/components/Search.vue'
+import SearchItem from '@/components/SearchItem.vue'
 
 const pageNum = ref(1)
 
@@ -152,15 +154,11 @@ getManagerList()
 <template>
     <div>
         <el-card shadow="hover" class="!border-0">
-            <el-form :model="searchForm" class="mb-3 md:flex" size="small" inline>
-                <el-form-item prop="username" label="关键词:">
+            <Search :model="searchForm" @search="getManagerList(1)" @reset="onResetClick">
+                <SearchItem label="关键词">
                     <el-input v-model="searchForm.keyword" clearable placeholder="请输入关键词搜索"></el-input>
-                </el-form-item>
-                <el-form-item class="ml-auto">
-                    <el-button type="primary" @click="getManagerList(1)">搜索</el-button>
-                    <el-button @click="onResetClick">重置</el-button>
-                </el-form-item>
-            </el-form>
+                </SearchItem>
+            </Search>
             <ListHeader @add="onAddClick" @refresh="getManagerList(1)"></ListHeader>
             <el-table v-loading="isLoading" :data="tableData" stripe>
                 <el-table-column label="管理员">

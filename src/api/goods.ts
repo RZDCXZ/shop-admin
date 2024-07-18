@@ -3,7 +3,7 @@ import { Status } from '@/constant/enum.ts'
 
 export interface AddGoodsForm {
     title: string
-    categoryId: number
+    category_id: number | null
     cover: string
     desc: string
     unit: string
@@ -13,7 +13,7 @@ export interface AddGoodsForm {
     stock_display: number
     min_price: number
     min_oprice: number
-    content: string
+    content?: string
 }
 
 type AddGoodsResult = AddGoodsForm & {
@@ -114,7 +114,7 @@ export interface GoodsDetailResult {
     stock_display: number
     express_id: number
     sku_type: number
-    sku_value: string
+    sku_value: any
     content: string
     discount: number
     create_time: string
@@ -152,14 +152,14 @@ export interface GoodsDetailResult {
 
 export interface EditGoodsSkusForm {
     sku_type: number
-    sku_value: {
+    sku_value?: {
         oprice: number
         pprice: number
         cprice: number
         weight: number
         volumn: number
     }
-    goodsSkus: Array<{
+    goodsSkus?: Array<{
         skus: Array<{
             goods_skus_card_id: number
             name: string
@@ -226,8 +226,8 @@ export const getGoodsListApi = (
     pageNum: number = 1,
     limit: number = 10,
     tab: string = 'all',
-    title: string = '',
-    categoryId: number,
+    title: string | null = '',
+    categoryId: number | null,
 ) =>
     request<GoodsListResult>({
         url: `/admin/goods/${pageNum}`,
@@ -285,7 +285,7 @@ export const setGoodsBannerApi = (id: number, banners: string[]) =>
         },
     })
 
-export const getGoodsDetail = (id: number) =>
+export const getGoodsDetailApi = (id: number) =>
     request<GoodsDetailResult>({
         url: `/admin/goods/read/${id}`,
         method: 'get',

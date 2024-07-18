@@ -6,12 +6,14 @@ import { ElNotification } from 'element-plus'
 import UploadFile from '@/components/UploadFile.vue'
 import FormDrawer from '@/components/FormDrawer.vue'
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
         openChoice?: boolean
+        limit?: number
     }>(),
     {
         openChoice: false,
+        limit: 1,
     },
 )
 
@@ -81,11 +83,11 @@ const onUploadSuccess = () => getImageList(1)
 const checkedImage = computed(() => imageList.value.filter((o) => o.checked))
 
 const onCheckChange = (item: CategoryImageListResult['list'][0] & { checked: boolean }) => {
-    if (item.checked && checkedImage.value.length > 1) {
+    if (item.checked && checkedImage.value.length > props.limit) {
         item.checked = false
         return ElNotification({
             type: 'warning',
-            message: '最多只能选一张',
+            message: `最多只能选${props.limit}张`,
             duration: 2000,
         })
     }

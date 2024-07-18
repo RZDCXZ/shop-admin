@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Refresh } from '@element-plus/icons-vue'
 import { computed } from 'vue'
+import { isMobile } from '@/utils/tools.ts'
 
 const props = withDefaults(
     defineProps<{
@@ -19,9 +20,11 @@ const emits = defineEmits(['add', 'refresh', 'delete'])
 <template>
     <div class="flex items-center justify-between mb-4">
         <div>
-            <el-button v-if="btns.includes('add')" type="primary" size="small" @click="emits('add')">新增</el-button>
+            <el-button v-if="btns.includes('add') && !isMobile()" type="primary" size="small" @click="emits('add')"
+                >新增</el-button
+            >
             <el-popconfirm
-                v-if="btns.includes('delete')"
+                v-if="btns.includes('delete') && !isMobile()"
                 title="确定删除所有选中项吗?"
                 confirm-button-text="确定"
                 cancel-button-text="取消"
@@ -31,6 +34,7 @@ const emits = defineEmits(['add', 'refresh', 'delete'])
                     <el-button type="danger" size="small">批量删除</el-button>
                 </template>
             </el-popconfirm>
+            <slot></slot>
         </div>
         <el-tooltip effect="dark" content="刷新数据" placement="top">
             <el-button v-if="btns.includes('refresh')" text @click="emits('refresh')">
