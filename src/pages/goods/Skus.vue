@@ -4,6 +4,8 @@ import { GoodsListResult } from '@/api/goods.ts'
 import { editGoodsSkusApi, getGoodsDetailApi } from '@/api/goods.ts'
 import { ElNotification } from 'element-plus'
 import FormDrawer from '@/components/FormDrawer.vue'
+import SkusCard from '@/pages/goods/components/SkusCard.vue'
+import { initSkusCardList, goodsId } from '@/utils/useSkus.ts'
 
 const emits = defineEmits(['reloadData'])
 
@@ -30,8 +32,6 @@ const onSubmit = async () => {
     emits('reloadData')
 }
 
-const goodsId = ref(0)
-
 const drawerRef = ref<InstanceType<typeof FormDrawer>>()
 
 const open = async (row: GoodsListResult['list'][0]) => {
@@ -45,6 +45,7 @@ const open = async (row: GoodsListResult['list'][0]) => {
         weight: 0,
         volume: 0,
     }
+    initSkusCardList(result.data)
     drawerRef.value?.open()
 }
 
@@ -62,8 +63,8 @@ defineExpose({
             <el-form :model="form">
                 <el-form-item label="规格类型">
                     <el-radio-group v-model="form.sku_type">
-                        <el-radio :label="0">单规格</el-radio>
-                        <el-radio :label="1">多规格</el-radio>
+                        <el-radio :value="0">单规格</el-radio>
+                        <el-radio :value="1">多规格</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <template v-if="form.sku_type === 0">
@@ -93,7 +94,9 @@ defineExpose({
                         </el-input>
                     </el-form-item>
                 </template>
-                <template v-else></template>
+                <template v-else>
+                    <SkusCard></SkusCard>
+                </template>
             </el-form>
         </FormDrawer>
     </div>

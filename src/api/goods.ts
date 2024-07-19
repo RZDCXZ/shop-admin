@@ -147,7 +147,7 @@ export interface GoodsDetailResult {
     }>
     goodsAttrs: string[]
     goodsSkus: number[]
-    goodsSkusCard: number[]
+    goodsSkusCard: any[]
 }
 
 export interface EditGoodsSkusForm {

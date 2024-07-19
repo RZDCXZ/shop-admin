@@ -29,3 +29,16 @@ export const showPrompt = (tip: string, value: string = '') => {
         inputValue: value,
     })
 }
+
+export const useArrayMoveUp = (arr: Array<any>, index: number) => {
+    swapArray(arr, index, index - 1)
+}
+
+export const useArrayMoveDown = (arr: Array<any>, index: number) => {
+    swapArray(arr, index, index + 1)
+}
+
+const swapArray = (arr: Array<any>, index1: number, index2: number) => {
+    arr[index1] = arr.splice(index2, 1, arr[index1])[0]
+    return arr
+}

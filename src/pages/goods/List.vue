@@ -420,7 +420,7 @@ getGoodsList()
                     <el-input v-model="form.title" placeholder="请输入商品名称,不能超过80个字符"></el-input>
                 </el-form-item>
                 <el-form-item prop="cover" label="封面">
-                    <el-input v-model="form.cover"></el-input>
+                    <el-input v-model="form.cover" placeholder="请输入封面链接"></el-input>
                 </el-form-item>
                 <el-form-item prop="category_id" label="商品分类">
                     <el-select v-model="form.category_id" placeholder="选择商品分类">
@@ -460,14 +460,14 @@ getGoodsList()
                 </el-form-item>
                 <el-form-item label="库存显示" prop="stock_display">
                     <el-radio-group v-model="form.stock_display">
-                        <el-radio :label="0">隐藏</el-radio>
-                        <el-radio :label="1">显示</el-radio>
+                        <el-radio :value="0">隐藏</el-radio>
+                        <el-radio :value="1">显示</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="是否上架" prop="status">
                     <el-radio-group v-model="form.status">
-                        <el-radio :label="0">放入放库</el-radio>
-                        <el-radio :label="1">立即上架</el-radio>
+                        <el-radio :value="0">放入放库</el-radio>
+                        <el-radio :value="1">立即上架</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-form>
