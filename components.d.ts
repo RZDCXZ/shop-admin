@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AsideList: typeof import('./src/components/AsideList.vue')['default']
+    ChoiceGoods: typeof import('./src/components/ChoiceGoods.vue')['default']
     ChoiceImage: typeof import('./src/components/ChoiceImage.vue')['default']
     ChoiceSkus: typeof import('./src/components/ChoiceSkus.vue')['default']
     Editor: typeof import('./src/components/Editor.vue')['default']

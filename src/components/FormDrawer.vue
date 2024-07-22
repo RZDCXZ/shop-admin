@@ -10,11 +10,13 @@ withDefaults(
         size?: string
         isShowFooter?: boolean
         destroyOnClose?: boolean
+        confirmText?: string
     }>(),
     {
         size: isMobile() ? '80%' : '45%',
         destroyOnClose: false,
         isShowFooter: true,
+        confirmText: '确认',
     },
 )
 
@@ -55,7 +57,7 @@ defineExpose({
         <slot></slot>
         <template #footer>
             <div v-if="isShowFooter" class="text-align-left">
-                <el-button :loading="isLoading" type="primary" @click="onSubmit">确认</el-button>
+                <el-button :loading="isLoading" type="primary" @click="onSubmit">{{ confirmText }}</el-button>
                 <el-button @click="onCancel">取消</el-button>
             </div>
         </template>
