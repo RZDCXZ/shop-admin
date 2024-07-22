@@ -267,12 +267,12 @@ export const destroyGoodsApi = (ids: number[]) =>
         },
     })
 
-export const checkGoodsApi = (id: number, check: number) =>
+export const checkGoodsApi = (id: number, ischeck: number) =>
     request<boolean>({
         url: `/admin/goods/${id}/check`,
         method: 'post',
         data: {
-            check,
+            ischeck,
         },
     })
 

@@ -7,6 +7,9 @@ import {
     editGoodsApi,
     getGoodsListApi,
     GoodsListResult,
+    checkGoodsApi,
+    restoreGoodsApi,
+    destroyGoodsApi,
 } from '@/api/goods.ts'
 import { CategoryListResult, getCategoryListApi } from '@/api/category.ts'
 import ListHeader from '@/components/ListHeader.vue'
@@ -181,6 +184,56 @@ const onStatusChange = async (status: Status) => {
     })
 }
 
+const onCheckChange = async (id: number, ischeck: number) => {
+    await checkGoodsApi(id, ischeck)
+    await getGoodsList(pageNum.value)
+    ElNotification({
+        type: 'success',
+        message: '操作成功',
+        duration: 2000,
+    })
+}
+
+const onRestoreGoodsClick = async () => {
+    if (!selectedIds.value.length)
+        return ElNotification({
+            type: 'warning',
+            message: '请先选择要删除的数据',
+            duration: 2000,
+        })
+    isLoading.value = true
+    await restoreGoodsApi(selectedIds.value).finally(() => (isLoading.value = false))
+    if (selectedIds.value) {
+        tableRef.value.clearSelection()
+    }
+    await getGoodsList(pageNum.value)
+    ElNotification({
+        type: 'success',
+        message: '恢复成功',
+        duration: 2000,
+    })
+}
+
+const onDestroyGoodsClick = async () => {
+    if (!selectedIds.value.length)
+        return ElNotification({
+            type: 'warning',
+            message: '请先选择要删除的数据',
+            duration: 2000,
+        })
+    isLoading.value = true
+    await destroyGoodsApi(selectedIds.value).finally(() => (isLoading.value = false))
+    if (selectedIds.value) {
+        tableRef.value.clearSelection()
+    }
+    await getGoodsList(pageNum.value)
+    ElNotification({
+        type: 'success',
+        message: '彻底删除成功',
+        duration: 2000,
+    })
+}
+
 const tabbars = ref([
     { key: 'all', name: '全部' },
     { key: 'checking', name: '审核中' },
@@ -277,12 +330,7 @@ getGoodsList()
                     </SearchItem>
                 </template>
             </Search>
-            <ListHeader
-                layout="add,delete,refresh"
-                @delete="onDeleteAllClick"
-                @add="onAddClick"
-                @refresh="getGoodsList(1)"
-            >
+            <ListHeader layout="add,refresh" @add="onAddClick" @refresh="getGoodsList(1)">
                 <el-button
                     v-if="(searchForm.tab === 'all' || searchForm.tab === 'off') && !isMobile()"
                     size="small"
@@ -294,6 +342,27 @@ getGoodsList()
                     size="small"
                     @click="onStatusChange(Status.disable)"
                     >下架</el-button
+                >
+                <el-button
+                    v-if="searchForm.tab !== 'delete' && !isMobile()"
+                    type="danger"
+                    size="small"
+                    @click="onDeleteAllClick"
+                    >批量删除</el-button
+                >
+                <el-button
+                    v-if="searchForm.tab === 'delete' && !isMobile()"
+                    type="warning"
+                    size="small"
+                    @click="onRestoreGoodsClick"
+                    >批量恢复</el-button
+                >
+                <el-button
+                    v-if="searchForm.tab === 'delete' && !isMobile()"
+                    type="danger"
+                    size="small"
+                    @click="onDestroyGoodsClick"
+                    >彻底删除</el-button
                 >
             </ListHeader>
             <el-table
@@ -349,8 +418,17 @@ getGoodsList()
                 >
                     <template #default="{ row }">
                         <div v-if="row.ischeck === 0" class="flex flex-col">
-                            <el-button type="success" size="small" plain>审核通过</el-button>
-                            <el-button class="!ml-0 mt-2" type="danger" size="small" plain>审核拒绝</el-button>
+                            <el-button type="success" size="small" plain @click="onCheckChange(row.id, 1)"
+                                >审核通过</el-button
+                            >
+                            <el-button
+                                class="!ml-0 mt-2"
+                                type="danger"
+                                size="small"
+                                plain
+                                @click="onCheckChange(row.id, 2)"
+                                >审核拒绝</el-button
+                            >
                         </div>
                         <span v-else>{{ row.ischeck === 1 ? '通过' : '拒绝' }}</span>
                     </template>
