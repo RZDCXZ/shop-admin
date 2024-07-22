@@ -146,7 +146,7 @@ export interface GoodsDetailResult {
         update_time: string
     }>
     goodsAttrs: string[]
-    goodsSkus: number[]
+    goodsSkus: any[]
     goodsSkusCard: any[]
 }
 

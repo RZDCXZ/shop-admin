@@ -368,7 +368,17 @@ getGoodsList()
                             <el-button class="!px-1" type="primary" size="small" text @click="onEditClick(row)"
                                 >编辑</el-button
                             >
-                            <el-button class="!px-1" type="primary" size="small" text @click="onSetGoodsSkusClick(row)"
+                            <el-button
+                                class="!px-1"
+                                :type="
+                                    (row.sku_type === 0 && !row.sku_value) ||
+                                    (row.sku_type === 1 && !row.goods_skus.length)
+                                        ? 'danger'
+                                        : 'primary'
+                                "
+                                size="small"
+                                text
+                                @click="onSetGoodsSkusClick(row)"
                                 >商品规格</el-button
                             >
                             <el-button

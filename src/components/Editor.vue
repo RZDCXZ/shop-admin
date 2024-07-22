@@ -69,8 +69,8 @@ const init = {
     min_height: 400,
     height: 600,
     toolbar_mode: 'none',
-    plugins:
-        'wordcount visualchars visualblocks toc textpattern template tabfocus spellchecker searchreplace save quickbars print preview paste pagebreak noneditable nonbreaking media insertdatetime importcss imagetools image hr help fullscreen fullpage directionality codesample code charmap link code table lists advlist anchor autolink autoresize autosave', // 插件需要import进来
+    plugins: '',
+    // 'wordcount visualchars visualblocks toc textpattern template tabfocus spellchecker searchreplace save quickbars print preview paste pagebreak noneditable nonbreaking media insertdatetime importcss imagetools image hr help fullscreen fullpage directionality codesample code charmap link code table lists advlist anchor autolink autoresize autosave', // 插件需要import进来
     toolbar:
         'formats undo redo fontsizeselect fontselect ltr rtl toc searchreplace imageUpload|outdent indent aligncenter alignleft alignright alignjustify lineheight  underline quicklink h2 h3 blockquote numlist bullist table removeformat forecolor backcolor bold italic  strikethrough hr link preview fullscreen help',
     content_style: 'p {margin: 5px 0; font-size: 14px}',

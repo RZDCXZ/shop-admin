@@ -5,7 +5,8 @@ import { editGoodsSkusApi, getGoodsDetailApi } from '@/api/goods.ts'
 import { ElNotification } from 'element-plus'
 import FormDrawer from '@/components/FormDrawer.vue'
 import SkusCard from '@/pages/goods/components/SkusCard.vue'
-import { initSkusCardList, goodsId } from '@/utils/useSkus.ts'
+import { initSkusCardList, goodsId, skus_list } from '@/utils/useSkus.ts'
+import SkusTable from '@/pages/goods/components/SkusTable.vue'
 
 const emits = defineEmits(['reloadData'])
 
@@ -22,7 +23,14 @@ const form = ref({
 
 const onSubmit = async () => {
     drawerRef.value?.showLoading()
-    await editGoodsSkusApi(goodsId.value, form.value as any).finally(() => drawerRef.value?.hideLoading())
+    let data: any = {
+        sku_type: form.value.sku_type,
+        sku_value: form.value.sku_value,
+    }
+    if (form.value.sku_type === 1) {
+        data.goodsSkus = skus_list.value
+    }
+    await editGoodsSkusApi(goodsId.value, data as any).finally(() => drawerRef.value?.hideLoading())
     drawerRef.value?.close()
     ElNotification({
         type: 'success',
@@ -96,6 +104,7 @@ defineExpose({
                 </template>
                 <template v-else>
                     <SkusCard></SkusCard>
+                    <SkusTable></SkusTable>
                 </template>
             </el-form>
         </FormDrawer>

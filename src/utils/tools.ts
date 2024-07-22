@@ -42,3 +42,20 @@ const swapArray = (arr: Array<any>, index1: number, index2: number) => {
     arr[index1] = arr.splice(index2, 1, arr[index1])[0]
     return arr
 }
+
+// skus排列算法
+export const cartesianProductOf = (...arg: any[]) => {
+    return Array.prototype.reduce.call(
+        arg,
+        (a: any, b: any) => {
+            const ret: any[] = []
+            a.forEach((a: any) => {
+                b.forEach((b: any) => {
+                    ret.push(a.concat([b]))
+                })
+            })
+            return ret
+        },
+        [[]],
+    )
+}

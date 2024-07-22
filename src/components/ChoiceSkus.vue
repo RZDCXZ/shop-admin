@@ -94,7 +94,9 @@ defineExpose({
             </el-aside>
             <el-main>
                 <el-checkbox-group v-model="form.list">
-                    <el-checkbox v-for="item in list" :key="item" border :label="item">{{ item }}</el-checkbox>
+                    <el-checkbox v-for="item in list" :key="item" border :label="item" :value="item">{{
+                        item
+                    }}</el-checkbox>
                 </el-checkbox-group>
             </el-main>
         </el-container>
