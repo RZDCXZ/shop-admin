@@ -26,6 +26,7 @@ const ManagerList = () => import('@/pages/manager/List.vue')
 const AccessList = () => import('@/pages/access/List.vue')
 const RoleList = () => import('@/pages/role/List.vue')
 const SkusList = () => import('@/pages/skus/List.vue')
+const LevelList = () => import('@/pages/level/List.vue')
 const SettingBase = () => import('@/pages/setting/Base.vue')
 
 const routes: RouteRecordRaw[] = [
@@ -149,6 +150,14 @@ const asyncRoutes: RouteRecordRaw[] = [
         component: SkusList,
         meta: {
             title: '商品规格管理',
+        },
+    },
+    {
+        path: '/level/list',
+        name: '/level/list',
+        component: LevelList,
+        meta: {
+            title: '会员等级',
         },
     },
     {
