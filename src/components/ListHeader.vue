@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Refresh } from '@element-plus/icons-vue'
+import { Download, Refresh } from '@element-plus/icons-vue'
 import { computed } from 'vue'
 
 const props = withDefaults(
@@ -13,7 +13,7 @@ const props = withDefaults(
 
 const btns = computed(() => props.layout.split(','))
 
-const emits = defineEmits(['add', 'refresh', 'delete'])
+const emits = defineEmits(['add', 'refresh', 'delete', 'download'])
 </script>
 
 <template>
@@ -33,13 +33,22 @@ const emits = defineEmits(['add', 'refresh', 'delete'])
             </el-popconfirm>
             <slot></slot>
         </div>
-        <el-tooltip effect="dark" content="刷新数据" placement="top">
-            <el-button v-if="btns.includes('refresh')" text @click="emits('refresh')">
-                <el-icon :size="20">
-                    <Refresh></Refresh>
-                </el-icon>
-            </el-button>
-        </el-tooltip>
+        <div>
+            <el-tooltip effect="dark" content="刷新数据" placement="top">
+                <el-button v-if="btns.includes('refresh')" size="small" text @click="emits('refresh')">
+                    <el-icon :size="16">
+                        <Refresh></Refresh>
+                    </el-icon>
+                </el-button>
+            </el-tooltip>
+            <el-tooltip effect="dark" content="导出数据" placement="top">
+                <el-button v-if="btns.includes('download')" size="small" text @click="emits('download')">
+                    <el-icon :size="16">
+                        <Download></Download>
+                    </el-icon>
+                </el-button>
+            </el-tooltip>
+        </div>
     </div>
 </template>
 

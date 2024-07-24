@@ -30,6 +30,14 @@ export const showPrompt = (tip: string, value: string = '') => {
     })
 }
 
+export const showModal = (content: string = '提示内容', type: string = 'warning', title: string = '') => {
+    return ElMessageBox.confirm(content, title, {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type,
+    })
+}
+
 export const useArrayMoveUp = (arr: Array<any>, index: number) => {
     swapArray(arr, index, index - 1)
 }

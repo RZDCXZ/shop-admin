@@ -17,7 +17,7 @@ const showSearch = ref(false)
 
 <template>
     <div>
-        <el-form :model="model" class="mb-3 md:flex" size="small" inline>
+        <el-form :model="model" class="mb-3 md:flex flex-wrap" size="small" inline>
             <slot></slot>
             <template v-if="showSearch">
                 <slot name="show"></slot>

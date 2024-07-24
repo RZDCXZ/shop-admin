@@ -1,12 +1,12 @@
 import request from '@/utils/request.ts'
 
 export interface OrderSearchForm {
-    tab: string
-    no: string
-    starttime: string
-    endtime: string
-    name: string
-    phone: string
+    tab: string | null
+    no: string | null
+    starttime: string | null
+    endtime: string | null
+    name: string | null
+    phone: string | null
 }
 
 export interface OrderListResult {
@@ -37,7 +37,7 @@ export interface OrderListResult {
         refund_no: string
         closed: number
         ship_status: string
-        ship_data: string
+        ship_data: any
         extra: string
         create_time: string
         update_time: string
@@ -145,6 +145,7 @@ export const exportOrderApi = (params: { tab: string; starttime: string; endtime
         url: `/admin/order/excelexport`,
         method: 'post',
         params,
+        responseType: 'blob',
     })
 
 export const getExpressCompanyListApi = (pageNum: number) =>
