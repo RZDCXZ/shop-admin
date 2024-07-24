@@ -77,27 +77,27 @@ defineExpose({
                 </el-form-item>
                 <template v-if="form.sku_type === 0">
                     <el-form-item label="市场价格">
-                        <el-input v-model="form.sku_value.oprice" class="!w-1/3">
+                        <el-input v-model="form.sku_value.oprice">
                             <template #append>元</template>
                         </el-input>
                     </el-form-item>
                     <el-form-item label="销售价格">
-                        <el-input v-model="form.sku_value.pprice" class="!w-1/3">
+                        <el-input v-model="form.sku_value.pprice">
                             <template #append>元</template>
                         </el-input>
                     </el-form-item>
                     <el-form-item label="成本价格">
-                        <el-input v-model="form.sku_value.cprice" class="!w-1/3">
+                        <el-input v-model="form.sku_value.cprice">
                             <template #append>元</template>
                         </el-input>
                     </el-form-item>
                     <el-form-item label="商品重量">
-                        <el-input v-model="form.sku_value.weight" class="!w-1/3">
+                        <el-input v-model="form.sku_value.weight">
                             <template #append>公斤</template>
                         </el-input>
                     </el-form-item>
                     <el-form-item label="商品体积">
-                        <el-input v-model="form.sku_value.volume" class="!w-1/3">
+                        <el-input v-model="form.sku_value.volume">
                             <template #append>立方米</template>
                         </el-input>
                     </el-form-item>

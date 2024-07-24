@@ -384,13 +384,15 @@ getGoodsList()
                             ></el-image>
                             <div class="flex-1">
                                 <p>{{ row.title }}</p>
-                                <div>
-                                    <span class="text-rose-500">￥{{ row.min_price }}</span>
-                                    <el-divider direction="vertical"></el-divider>
-                                    <span class="text-gray-500 text-xs">￥{{ row.min_oprice }}</span>
-                                </div>
-                                <p class="text-gray-400 text-xs mb-1">分类:{{ row.category?.name || '未分类' }}</p>
-                                <p class="text-gray-400 text-xs">创建时间:{{ row.create_time }}</p>
+                                <template v-if="!isMobile()">
+                                    <div>
+                                        <span class="text-rose-500">￥{{ row.min_price }}</span>
+                                        <el-divider direction="vertical"></el-divider>
+                                        <span class="text-gray-500 text-xs">￥{{ row.min_oprice }}</span>
+                                    </div>
+                                    <p class="text-gray-400 text-xs mb-1">分类:{{ row.category?.name || '未分类' }}</p>
+                                    <p class="text-gray-400 text-xs">创建时间:{{ row.create_time }}</p>
+                                </template>
                             </div>
                         </div>
                     </template>
@@ -440,7 +442,7 @@ getGoodsList()
                     align="center"
                     width="100"
                 ></el-table-column>
-                <el-table-column v-if="!isMobile()" label="操作" align="center">
+                <el-table-column label="操作" align="center">
                     <template #default="{ row }">
                         <div v-if="searchForm.tab !== 'delete'">
                             <el-button class="!px-1" type="primary" size="small" text @click="onEditClick(row)"
@@ -527,22 +529,22 @@ getGoodsList()
                     <el-input v-model="form.unit" placeholder="请输入商品单位"></el-input>
                 </el-form-item>
                 <el-form-item prop="stock" label="总库存">
-                    <el-input v-model="form.stock" class="!w-1/3" type="number">
+                    <el-input v-model="form.stock" type="number">
                         <template #append>件</template>
                     </el-input>
                 </el-form-item>
                 <el-form-item prop="min_stock" label="库存预警">
-                    <el-input v-model="form.min_stock" class="!w-1/3" type="number">
+                    <el-input v-model="form.min_stock" type="number">
                         <template #append>件</template>
                     </el-input>
                 </el-form-item>
                 <el-form-item prop="min_price" label="最低销售价">
-                    <el-input v-model="form.min_price" class="!w-1/3" type="number">
+                    <el-input v-model="form.min_price" type="number">
                         <template #append>元</template>
                     </el-input>
                 </el-form-item>
                 <el-form-item prop="min_oprice" label="最低原价">
-                    <el-input v-model="form.min_oprice" class="!w-1/3" type="number">
+                    <el-input v-model="form.min_oprice" type="number">
                         <template #append>元</template>
                     </el-input>
                 </el-form-item>
