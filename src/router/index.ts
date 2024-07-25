@@ -28,6 +28,8 @@ const RoleList = () => import('@/pages/role/List.vue')
 const SkusList = () => import('@/pages/skus/List.vue')
 const LevelList = () => import('@/pages/level/List.vue')
 const SettingBase = () => import('@/pages/setting/Base.vue')
+const SettingBuy = () => import('@/pages/setting/Buy.vue')
+const SettingShip = () => import('@/pages/setting/Ship.vue')
 
 const routes: RouteRecordRaw[] = [
     {
@@ -166,6 +168,22 @@ const asyncRoutes: RouteRecordRaw[] = [
         component: SettingBase,
         meta: {
             title: '基础配置',
+        },
+    },
+    {
+        path: '/setting/buy',
+        name: '/setting/buy',
+        component: SettingBuy,
+        meta: {
+            title: '交易设置',
+        },
+    },
+    {
+        path: '/setting/ship',
+        name: '/setting/ship',
+        component: SettingShip,
+        meta: {
+            title: '物流设置',
         },
     },
 ]

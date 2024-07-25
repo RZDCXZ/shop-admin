@@ -76,9 +76,11 @@ export const getSysconfigApi = () =>
         method: 'get',
     })
 
-export const editSysconfigApi = (data: SysconfigEditForm) =>
+export const editSysconfigApi = (data: any) =>
     request<boolean>({
         url: '/admin/sysconfig',
         method: 'post',
         data,
     })
+
+export const uploadAction = '/api/admin/sysconfig/upload'
