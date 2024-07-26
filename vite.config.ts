@@ -8,7 +8,7 @@ import UnoCSS from 'unocss/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-    const { VITE_PROXY_TARGET } = loadEnv(mode, process.cwd())
+    const { VITE_PROXY_TARGET, VITE_APP_BASE_API } = loadEnv(mode, process.cwd())
 
     return {
         resolve: {
@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => {
         },
         server: {
             proxy: {
-                '/api': {
+                [VITE_APP_BASE_API]: {
                     target: VITE_PROXY_TARGET,
                     changeOrigin: true,
                     rewrite: (path) => path.replace(/^\/api/, ''),

@@ -83,4 +83,4 @@ export const editSysconfigApi = (data: any) =>
         data,
     })
 
-export const uploadAction = '/api/admin/sysconfig/upload'
+export const uploadAction = import.meta.env.VITE_APP_BASE_API + '/admin/sysconfig/upload'
