@@ -30,6 +30,8 @@ const LevelList = () => import('@/pages/level/List.vue')
 const SettingBase = () => import('@/pages/setting/Base.vue')
 const SettingBuy = () => import('@/pages/setting/Buy.vue')
 const SettingShip = () => import('@/pages/setting/Ship.vue')
+const DistributionIndex = () => import('@/pages/distribution/Index.vue')
+const DistributionSetting = () => import('@/pages/distribution/Setting.vue')
 
 const routes: RouteRecordRaw[] = [
     {
@@ -184,6 +186,22 @@ const asyncRoutes: RouteRecordRaw[] = [
         component: SettingShip,
         meta: {
             title: '物流设置',
+        },
+    },
+    {
+        path: '/distribution/index',
+        name: '/distribution/index',
+        component: DistributionIndex,
+        meta: {
+            title: '分销员管理',
+        },
+    },
+    {
+        path: '/distribution/setting',
+        name: '/distribution/setting',
+        component: DistributionSetting,
+        meta: {
+            title: '分销设置',
         },
     },
 ]
