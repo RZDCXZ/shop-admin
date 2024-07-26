@@ -50,7 +50,7 @@ const rules = ref<FormRules<AddRoleForm>>({
     desc: [{ required: true, message: '角色描述不能为空', trigger: 'blur' }],
 })
 
-const ruleIds = ref([])
+const ruleIds = ref<any>([])
 
 const ruleList = ref<AccessListResult['list']>([])
 
@@ -148,7 +148,7 @@ const onSetRoleClick = async (row: RoleListResult['list'][0]) => {
     const result = await getAccessListApi()
     ruleList.value = result.data.list
     defaultExpandedKeys.value = result.data.list.map((o) => o.id)
-    ruleIds.value = row.rules.map((o) => o.id)
+    ruleIds.value = row.rules.map((o: any) => o.id)
     setRuleDrawerRef.value?.open()
     setTimeout(() => {
         elTreeRef.value.setCheckedKeys(ruleIds.value)
@@ -156,7 +156,7 @@ const onSetRoleClick = async (row: RoleListResult['list'][0]) => {
     }, 50)
 }
 
-const onTreeCheck = (...e) => {
+const onTreeCheck = (...e: any) => {
     const { checkedKeys, halfCheckedKeys } = e[1]
     ruleIds.value = [...checkedKeys, ...halfCheckedKeys]
 }

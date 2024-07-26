@@ -5,10 +5,7 @@ import {
     addCategoryApi,
     editCategoryApi,
     deleteCategoryApi,
-    deleteCategoryItemApi,
-    addCategoryItemApi,
     changeCategoryStatusApi,
-    getCategoryItemListApi,
     CategoryListResult,
 } from '@/api/category.ts'
 import { computed, ref } from 'vue'

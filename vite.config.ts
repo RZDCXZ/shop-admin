@@ -11,6 +11,7 @@ export default defineConfig(({ mode }) => {
     const { VITE_PROXY_TARGET, VITE_APP_BASE_API } = loadEnv(mode, process.cwd())
 
     return {
+        base: './',
         resolve: {
             alias: {
                 '@': path.resolve(__dirname, 'src'),

@@ -15,6 +15,7 @@ const props = withDefaults(
     {
         limit: 1,
         preview: true,
+        modelValue: '',
     },
 )
 
@@ -75,7 +76,7 @@ const onRemoveClick = (url: string) => {
 
 const callbackFunc = ref<object | null>(null)
 
-const open = (callback = null) => {
+const open = (callback: any = null) => {
     callbackFunc.value = callback
     dialogVisible.value = true
 }

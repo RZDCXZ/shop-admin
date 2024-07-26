@@ -97,7 +97,7 @@ const infoModalRef = ref<InstanceType<typeof InfoModal>>()
 const info = ref()
 
 const openInfoModal = (row: OrderListResult['list'][0]) => {
-    row.order_items = row.order_items.map((o) => {
+    row.order_items = row.order_items.map((o: any) => {
         if (o.skus_type === 1 && o.goods_skus) {
             let s = []
             for (const k in o.goods_skus.skus) {
@@ -113,7 +113,7 @@ const openInfoModal = (row: OrderListResult['list'][0]) => {
 
 const onRefundClick = (id: number, agree: number) => {
     ;(agree ? showModal('是否要同意该订单退款?') : showPrompt('请输入拒绝的理由')).then(async ({ value }) => {
-        let data = { agree }
+        let data: any = { agree }
         if (!agree) {
             data.disagree_reason = value
         }

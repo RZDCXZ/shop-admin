@@ -30,7 +30,7 @@ export const showPrompt = (tip: string, value: string = '') => {
     })
 }
 
-export const showModal = (content: string = '提示内容', type: string = 'warning', title: string = '') => {
+export const showModal = (content: string = '提示内容', type: any = 'warning', title: string = '') => {
     return ElMessageBox.confirm(content, title, {
         confirmButtonText: '确认',
         cancelButtonText: '取消',

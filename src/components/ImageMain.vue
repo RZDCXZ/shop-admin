@@ -23,11 +23,11 @@ const currentPage = ref(1)
 
 const total = ref(0)
 
-const limit = ref(10)
+const pageLimit = ref(10)
 
 const categoryId = ref(0)
 
-const imageList = ref<CategoryImageListResult['list']>([])
+const imageList = ref<any>([])
 
 const drawerRef = ref<InstanceType<typeof FormDrawer>>()
 
@@ -43,7 +43,7 @@ const getImageList = async (pageNum: number) => {
     const result = await getImageListByCategoryApi(categoryId.value, currentPage.value).finally(
         () => (isLoading.value = false),
     )
-    imageList.value = result.data.list.map((item) => {
+    imageList.value = result.data.list.map((item: any) => {
         item.checked = false
         return item
     })
@@ -80,7 +80,7 @@ const onDeleteClick = async (id: number) => {
 
 const onUploadSuccess = () => getImageList(1)
 
-const checkedImage = computed(() => imageList.value.filter((o) => o.checked))
+const checkedImage = computed(() => imageList.value.filter((o: any) => o.checked))
 
 const onCheckChange = (item: CategoryImageListResult['list'][0] & { checked: boolean }) => {
     if (item.checked && checkedImage.value.length > props.limit) {
@@ -140,7 +140,7 @@ defineExpose({
                 background
                 :total="total"
                 :current-page="currentPage"
-                :page-size="limit"
+                :page-size="pageLimit"
                 @current-change="getImageList"
             />
         </div>

@@ -45,7 +45,7 @@ const onDeleteClick = async (id: number) => {
 const choiceGoodsRef = ref<InstanceType<typeof ChoiceGoods>>()
 
 const onConnect = () => {
-    choiceGoodsRef.value?.open(category_id.value, async (goods_ids) => {
+    choiceGoodsRef.value?.open(category_id.value, async (goods_ids: any) => {
         await addCategoryItemApi(category_id.value, goods_ids)
         await getList()
         ElNotification({

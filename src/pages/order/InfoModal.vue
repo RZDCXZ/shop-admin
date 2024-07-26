@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { isMobile } from '@/utils/tools.ts'
 import { ref, computed } from 'vue'
-import { OrderListResult } from '@/api/order.ts'
 import { useDateFormat } from '@vueuse/core'
 import ShipInfoModal from '@/pages/order/ShipInfoModal.vue'
 
 const props = defineProps<{
-    info: OrderListResult['list'][0]
+    info: any
 }>()
 
 const ship_time = computed(() => {
@@ -18,7 +17,7 @@ const ship_time = computed(() => {
 })
 
 const refund_status = computed(() => {
-    const opt = {
+    const opt: any = {
         pending: '未退款',
         applied: '已申请,等待审核',
         processing: '退款中',

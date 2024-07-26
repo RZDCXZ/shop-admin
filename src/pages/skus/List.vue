@@ -122,8 +122,8 @@ const onStatusChange = async (status: Status, row: SkusListResult['list'][0] & {
 
 const selectedIds = ref<number[]>([])
 
-const onSelectionchange = (e) => {
-    selectedIds.value = e.map((o) => o.id)
+const onSelectionchange = (e: any) => {
+    selectedIds.value = e.map((o: any) => o.id)
 }
 
 const onDeleteAllClick = async () => {

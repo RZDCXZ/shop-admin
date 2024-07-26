@@ -19,7 +19,7 @@ const searchForm = ref({
 
 const dialogVisible = ref(false)
 
-const tableData = ref<CategoryItemResult>([])
+const tableData = ref<any>([])
 
 const onSubmit = () => {
     if (typeof callbackFunc.value === 'function') {
@@ -51,7 +51,7 @@ const getGoodsList = async (p: number = 1) => {
 
 const callbackFunc = ref()
 
-const open = async (id: number, callback = null) => {
+const open = async (id: number, callback: any = null) => {
     searchForm.value.category_id = id
     callbackFunc.value = callback
     await getGoodsList(1)
